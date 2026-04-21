@@ -7,11 +7,7 @@ node_modules/
 .vscode/
 .idea/
 
-# Don't commit FAISS index (rebuilt on server)
-resume_index.faiss
-resume_metadata.json
-
-# Don't commit PDFs (uploaded on server)
+# PDFs uploaded on server
 linkedin_pdfs/*.pdf
 
 # Keep frontend dist for deployment
