@@ -1,0 +1,53 @@
+{
+  "student_name": "NK VAISHNAV",
+  "skills": "STA\n\n\nGraduate Engineering Trainee at Hyundai Motor India Engineering\n\nPrimetime\n\nFusion Compiler\n\nSynopsys Design Compiler\n\nICC2\n\nGenus\n\ncircuit verse\n\n\nTeaching Assistant at Indraprastha Institute of Information Technology, Delhi\n\nTinker CAD\n\n\nTeaching Assistant at Indraprastha Institute of Information Technology, Delhi\n\nC#\n\n\nTeaching Assistant at Indraprastha Institute of Information Technology, Delhi\n\nTeaching\n\n\nTeaching Assistant at Indraprastha Institute of Information Technology, Delhi\n\nCadence Encounter\n\n\nTeaching Assistant at Indraprastha Institute of Information Technology, Delhi\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nA complete RTL to GDS implementation of a design\n\nEldo\n\n\nTeaching Assistant at Indraprastha Institute of Information Technology, Delhi\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nOAI 222 implementation with pre and post layout analysis on complex and non complex implementation\n\n\nShow all 4 details\nC (Programming Language)\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nC, C++ and MS office\n\nDesign of an IP for the DNNLS, MMSE, and LS Algorithms on  Vivado HLS and benchmark with the reference on SDK\n\n\nShow all 5 details\nEngineering\n\n\n2 experiences at TSSPDCL and 1 other company\n\n\n2 educational experiences at Indraprastha Institute of Information Technology, Delhi and 1 other school\n\nC, C++ and MS office\n\n\nShow all 12 details\nElectric Vehicles\n\nXilinx Vivado\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nDesign of an IP for the DNNLS, MMSE, and LS Algorithms on  Vivado HLS and benchmark with the reference on SDK\n\nResearch and Development (R&D)\n\n\nIndraprastha Institute of Information Technology, Delhi\n\n1 endorsement\n\nVerilog\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nRTL Design of the 5 Stage RISC V Pipeline\n\nA complete RTL to GDS implementation of a design\n\nCadence Virtuoso\n\n\nTeaching Assistant at Indraprastha Institute of Information Technology, Delhi\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nOAI 222 implementation with pre and post layout analysis on complex and non complex implementation\n\n\nShow all 4 details\nCadence Virtuoso Layout Editor\n\n\nTeaching Assistant at Indraprastha Institute of Information Technology, Delhi\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nOAI 222 implementation with pre and post layout analysis on complex and non complex implementation\n\n\nShow all 4 details\nCadence Schematic Capture\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nOAI 222 implementation with pre and post layout analysis on complex and non complex implementation\n\nDesign of I/O circuits for a 2RW 8T SRAM array",
+  "courses": "Courses\nC, C++ and MS office\n\nAssociated with MVSR Engineering College\n\nMATLAB and Pspice\n\nAssociated with MVSR Engineering College",
+  "other_info": null,
+  "projects": {
+    "raw_text": "IMC Bit Serial Computation on an 8T SRAM cell (Capstone)\n\nJun 2022 – Dec 2022\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesigned a 3*3 multiplication on an 8T SRAM Memory array using 65nm technology. Verified the functionality using Eldo.\n\nOther contributors\n\n\n\n+5\nView all contributors\nA complete RTL to GDS implementation of a design\n\nJan 2022 – May 2022\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nGuide: Dr. Sneh Saurabh\nDescription: A synchronous design comprising of a counter, and an encoder is carried \nforward through the following steps:\nRTL design, Coverage analysis, Synthesis, Equivalence check, Static timing analysis, DFT \ninsertion, Chip planning, Placement, CTS, and Routing. Carrying the above steps, the \nprovided specification is translated to a design realizable on the chip.\n\nSkills: Verilog, Engineering, +1 skill\n\nDesign of I/O circuits for a 2RW 8T SRAM array\n\nJan 2022 – May 2022\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nGuide: Dr. Anuj Grover\nDescription: Designed Multiplexer (MUX16), Write Driver, and Precharge circuit for an \n8192x32m16 Memory Array. MUX was designed with transmission gate logic to select the \nrequired columns. Write driver was integrated into the design. The Precharge circuit was \nplaced above the MUX. Schematic, layout, and simulations were performed using Cadence.\n\nSkills: Cadence Virtuoso, Cadence Virtuoso Layout Editor, +3 skills\n\nDesign of an IP for the DNNLS, MMSE, and LS Algorithms on  Vivado HLS and benchmark with the reference on SDK\n\nJan 2022 – May 2022\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nShow project\nGuide: Dr. Sumit Darak.\nDescription: Generated a custom IP to estimate the channel weight for a given SNR. \nAlgorithms implemented for channel estimation are DNNLS, MMSE, and LS.\n\nSkills: C (Programming Language), Xilinx Vivado, +1 skill\n\nRTL Design of the 5 Stage RISC V Pipeline\n\nOct 2021 – Dec 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nShow project\nGuide: Dr. Sujay Deb\nDescription: Implemented the RISC V ISA in Vivado by using two-phase clocking to reduce \nthe hardware requirement at an abstract level. The design also incorporates the bypassing \nlogic to improve CPI.\nThe design is implemented using Verilog HDL.\n\nSkills: Verilog, Engineering\n\nOAI 222 implementation with pre and post layout analysis on complex and non complex implementation\n\nSep 2021 – Nov 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nGuide: Dr. Anuj Grover\nDescription: Designed Domino CMOS OAI222 complex and non-complex gates and its \nlayout using 65nm technology using cadence. Verified the functionality and PPA across \nvarious corners using Eldo. Compared the design with pre-and post-layout simulations.\n\nSkills: Cadence Virtuoso, Cadence Virtuoso Layout Editor, +3 skills",
+    "parsed_projects": [
+      {
+        "title": "IMC Bit Serial Computation on an 8T SRAM cell (Capstone)",
+        "description": "",
+        "duration": "Jun 2022 – Dec 2022",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Designed a 3*3 multiplication on an 8T SRAM Memory array using 65nm technology. Verified the functionality using Eldo.",
+        "description": "Other contributors +5 View all contributors A complete RTL to GDS implementation of a design",
+        "duration": "Jan 2022 – May 2022",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Guide: Dr. Sneh Saurabh",
+        "description": "Description: A synchronous design comprising of a counter, and an encoder is carried forward through the following steps: RTL design, Coverage analysis, Synthesis, Equivalence check, Static timing analysis, DFT insertion, Chip planning, Placement, CTS, and Routing. Carrying the above steps, the provided specification is translated to a design realizable on the chip. Skills: Verilog, Engineering, +1 skill Design of I/O circuits for a 2RW 8T SRAM array",
+        "duration": "Jan 2022 – May 2022",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Guide: Dr. Anuj Grover",
+        "description": "Description: Designed Multiplexer (MUX16), Write Driver, and Precharge circuit for an 8192x32m16 Memory Array. MUX was designed with transmission gate logic to select the required columns. Write driver was integrated into the design. The Precharge circuit was placed above the MUX. Schematic, layout, and simulations were performed using Cadence. Skills: Cadence Virtuoso, Cadence Virtuoso Layout Editor, +3 skills Design of an IP for the DNNLS, MMSE, and LS Algorithms on  Vivado HLS and benchmark with the reference on SDK",
+        "duration": "Jan 2022 – May 2022",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Show project",
+        "description": "Guide: Dr. Sumit Darak. Description: Generated a custom IP to estimate the channel weight for a given SNR. Algorithms implemented for channel estimation are DNNLS, MMSE, and LS. Skills: C (Programming Language), Xilinx Vivado, +1 skill RTL Design of the 5 Stage RISC V Pipeline",
+        "duration": "Oct 2021 – Dec 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Show project",
+        "description": "Guide: Dr. Sujay Deb Description: Implemented the RISC V ISA in Vivado by using two-phase clocking to reduce the hardware requirement at an abstract level. The design also incorporates the bypassing logic to improve CPI. The design is implemented using Verilog HDL. Skills: Verilog, Engineering OAI 222 implementation with pre and post layout analysis on complex and non complex implementation",
+        "duration": "Sep 2021 – Nov 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Guide: Dr. Anuj Grover",
+        "description": "Description: Designed Domino CMOS OAI222 complex and non-complex gates and its layout using 65nm technology using cadence. Verified the functionality and PPA across various corners using Eldo. Compared the design with pre-and post-layout simulations. Skills: Cadence Virtuoso, Cadence Virtuoso Layout Editor, +3 skills",
+        "duration": "",
+        "organization": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "student_name": "Raghav Sharma",
+  "skills": "Prime power\n\nSynopsys Design Compiler\n\n1 endorsement\n\nPhysical Design\n\n1 endorsement\n\nLogic Synthesis\n\nDFT\n\n1 endorsement\n\nvcs\n\nSynopsys tools\n\ninnovus\n\nSynopsys Primetime\n\n1 endorsement\n\nprinepower\n\nSimvision\n\nxcelium\n\nLow-power Design\n\n1 endorsement\n\nRTL Design\n\n1 endorsement\n\nCode Coverage\n\nFunctional Verification\n\nmemory design\n\nCadence Virtuoso\n\n1 endorsement\n\nStatic Timing Analysis\n\nCadence Encounter\n\nCadence Virtuoso Layout Editor\n\nEldo\n\nMachine Learning\n\n2 endorsements\n\nAnalytics\n\n1 endorsement\n\nData Science\n\n1 endorsement\n\nPublic Policy\n\n1 endorsement\n\nMicrosoft Excel\n\nMySQL\n\nC (Programming Language)\n\n1 endorsement\n\nTableau\n\nCritical Thinking\n\n5 endorsements\n\nSystems Thinking\n\n3 endorsements",
+  "courses": "Advanced Embedded Logic Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDigital VLSI Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nMemory Design & Test\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nOptical Communication Systems\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nSolid State Devices\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nVLSI Design Flow\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi",
+  "other_info": "Volunteering\nVolunteer\n\nGautam Foundation\n\nMar 2009 - Jul 2016 · 7 yrs 5 mos\n\nHealth\n\nFundraising, assisting patients, organising functions & food distribution drives.",
+  "projects": {
+    "raw_text": "In memory Compute\n\nJun 2022 – Present\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nEfficient Post Silicon Debug Platforms for Future Many Core Systems\n\nFeb 2022 – Present\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDeveloping a Post Silicon Debug framework to optimize the bug localisation process during the Post Silicon Validation.\n\nOther contributors\n\nView all contributors\n8T 1R/1RW sram cell array design with mux16\n\nFeb 2022 – Apr 2022\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesigned 8T 1R/1RW SRAM cell for mux 16 configuration using 65nm technology as per the following specifications:\n Vmin (read port): 0.81v\n Vmin (write port): 1.08v when mux 16\n Vmin (write port): 0.81 when mux 1 with WL Boost assist scheme\n Icell: 100uA at worst corner, 1.08v\nArrived at the proper sizing of the transistors to able to satisfy the requirement of minimum\narea and to do the 6-Sigma qualification of figure of merits like Read SNM, Hold SNM, Write \nMargin at their respective critical PVT’s. Also implemented the write assist scheme, Wordline \nBoost, to qualify ‘Write Margin’ at low voltage of operation.\nMade the DRC/LVS clean layout followed by pex analysis.\n\nOther contributors\n\nView all contributors\nDesign of AOI221 complex gate using Static logic\n\nAug 2021 – Nov 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nShow project\nDesign the Complex gate Schematic design and individual CMOS implementation of each design \nusing virtuoso on 65nm Technology. Calculated the sizing of the transistor using the concept of \nlogical effort and also maximizing width given the 12T cell height. Designed two layouts one with a simple gate and the other with a complex gate design.\nDone DRC Cleaning, LVS, and Post layout extraction. Also, done Pre and Post layout simulation \nusing ELDO.Calculated various parameters like Static power, dynamic power, and also verifies design at different PVT.\n\nOther contributors\n\n\n\nView all contributors\nHW-SW co-design Implementation of of Viterbi decoder algorithm on Zedboard using Xilink SDSoC\n\nFeb 2021 – Apr 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nHardware Software partitioning of viterbi decoding algorithm using Xilink SDSoc. The hardware co-design was implemented using the Zed board. The core objective was to implement the algorithm on the software alone and then implement it using the hardware-software co-design approach and analyse the achieved performance gain. A performance gain of around 10X was realised with the HW-SW co-design approach.\n\nOther contributors\n\n\n\nView all contributors\nRTL to GDS flow\n\nFeb 2021 – Apr 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nImplemented complete VLSI Design Flow (RTL to GDS) using various tools of Cadence, and \nSynopsys.\nWritten RTL code for a given problem, compiled, elaborated, simulated, generated, and \nanalyzed code coverage report, synthesize the design, generated Power & Area report, \nperformed STA, logical equivalence checking, and inserted scan-chain in the design for DFT.\nPhysical design: Floorplanning using the utilization of 0.5 and 0.8, placement, clock tree \nsynthesis, global & detailed routing, Power Analysis, and finally writing out final GDS\n\nOther contributors",
+    "parsed_projects": [
+      {
+        "title": "In memory Compute",
+        "description": "",
+        "duration": "Jun 2022 – Present",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Efficient Post Silicon Debug Platforms for Future Many Core Systems",
+        "description": "",
+        "duration": "Feb 2022 – Present",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Developing a Post Silicon Debug framework to optimize the bug localisation process during the Post Silicon Validation.",
+        "description": "Other contributors View all contributors 8T 1R/1RW sram cell array design with mux16",
+        "duration": "Feb 2022 – Apr 2022",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Designed 8T 1R/1RW SRAM cell for mux 16 configuration using 65nm technology as per the following specifications:",
+        "description": " Vmin (read port): 0.81v  Vmin (write port): 1.08v when mux 16  Vmin (write port): 0.81 when mux 1 with WL Boost assist scheme  Icell: 100uA at worst corner, 1.08v Arrived at the proper sizing of the transistors to able to satisfy the requirement of minimum area and to do the 6-Sigma qualification of figure of merits like Read SNM, Hold SNM, Write Made the DRC/LVS clean layout followed by pex analysis. Other contributors View all contributors Design of AOI221 complex gate using Static logic",
+        "duration": "Aug 2021 – Nov 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Show project",
+        "description": "Design the Complex gate Schematic design and individual CMOS implementation of each design using virtuoso on 65nm Technology. Calculated the sizing of the transistor using the concept of logical effort and also maximizing width given the 12T cell height. Designed two layouts one with a simple gate and the other with a complex gate design. Done DRC Cleaning, LVS, and Post layout extraction. Also, done Pre and Post layout simulation using ELDO.Calculated various parameters like Static power, dynamic power, and also verifies design at different PVT. Other contributors View all contributors HW-SW co-design Implementation of of Viterbi decoder algorithm on Zedboard using Xilink SDSoC",
+        "duration": "Feb 2021 – Apr 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Hardware Software partitioning of viterbi decoding algorithm using Xilink SDSoc. The hardware co-design was implemented using the Zed board. The core objective was to implement the algorithm on the software alone and then implement it using the hardware-software co-design approach and analyse the achieved performance gain. A performance gain of around 10X was realised with the HW-SW co-design approach.",
+        "description": "Other contributors View all contributors RTL to GDS flow",
+        "duration": "Feb 2021 – Apr 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Implemented complete VLSI Design Flow (RTL to GDS) using various tools of Cadence, and",
+        "description": "Synopsys. Written RTL code for a given problem, compiled, elaborated, simulated, generated, and analyzed code coverage report, synthesize the design, generated Power & Area report, performed STA, logical equivalence checking, and inserted scan-chain in the design for DFT. Physical design: Floorplanning using the utilization of 0.5 and 0.8, placement, clock tree synthesis, global & detailed routing, Power Analysis, and finally writing out final GDS Other contributors",
+        "duration": "",
+        "organization": ""
+      }
+    ]
+  }
+}

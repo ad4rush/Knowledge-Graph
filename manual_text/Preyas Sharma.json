@@ -1,0 +1,53 @@
+{
+  "student_name": "Preyas Sharma",
+  "skills": "High Level Synthesis\n\n\nVLSI Design Flow: RTL to GDS\n\nFloor planning \n\n\nVLSI Design Flow: RTL to GDS\n\nPhysical Design\n\n\nVLSI Design Flow: RTL to GDS\n\nPetalinux\n\n\nEngineer II at MathWorks\n\nBuildroot\n\n\nEngineer II at MathWorks\n\nStatic Timing Analysis\n\n\nStatic Timing Analysis and Clock Domain Crossing\n\n\nVLSI Design Flow: RTL to GDS\n\nTritonCTS\n\n\nDigital VLSI SoC Design and Planning\n\nopenlane\n\n\nDigital VLSI SoC Design and Planning\n\nngspice\n\n\nDigital VLSI SoC Design and Planning\n\nmagic layout\n\n\nDigital VLSI SoC Design and Planning\n\nOpenSTA\n\n\nDigital VLSI SoC Design and Planning\n\nEmbedded Systems\n\n\n2 experiences at MathWorks\n\nTcl\n\n\nEngineer II at MathWorks\n\nREST APIs\n\n\nSoftware Engineer at Ericsson\n\n1 endorsement\n\nPostman API\n\n\nSoftware Engineer at Ericsson\n\n1 endorsement\n\nCamunda BPM\n\n\nSoftware Engineer at Ericsson\n\n1 endorsement\n\nSystem on a Chip (SoC)\n\n\nEngineer II at MathWorks\n\nEDA\n\nEmbedded Software\n\n\nEngineer II at MathWorks\n\nRTL Coding\n\n\nEngineer II at MathWorks\n\nSoftware Defined Radio\n\n\n2 experiences at MathWorks\n\nModel Based Design \n\n\n2 experiences at MathWorks\n\nModel-based Systems Engineering (MBSE)\n\nPython (Programming Language)\n\n\nMasters Student at Indraprastha Institute of Information Technology, Delhi\n\nFPGA prototyping\n\n\n2 experiences at MathWorks\n\nXilinx Vivado\n\n\n2 experiences at MathWorks and 1 other company\n\nMentor Graphics Eldo \n\n\nMasters Student at Indraprastha Institute of Information Technology, Delhi\n\nMentor Graphics Calibre \n\n\nMasters Student at Indraprastha Institute of Information Technology, Delhi\n\nSystemVerilog\n\n\nMasters Student at Indraprastha Institute of Information Technology, Delhi\n\nMATLAB\n\nPassed LinkedIn Skill Assessment\n\nVerilog\n\n\nMasters Student at Indraprastha Institute of Information Technology, Delhi\n\n\nVLSI Design Flow: RTL to GDS\n\nCadence Virtuoso\n\n\nMasters Student at Indraprastha Institute of Information Technology, Delhi\n\nJava\n\n\nSoftware Engineer at Ericsson\n\n4 endorsements\n\n\nEndorsed by Apoorv Saxena and 1 other who is highly skilled at this\n\nC++\n\n\nSoftware Engineer at Ericsson\n\n3 endorsements\n\n\nEndorsed by Apoorv Saxena who is highly skilled at this",
+  "courses": "Advanced Embedded Logic Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nAnalog CMOS Circuit Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nComputer Architecture\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDigital VLSI Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nIntegrated Circuit Fabrication\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nMemory Design & Testing\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nSolid State Devices\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nVLSI Design Flow\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi",
+  "other_info": "Volunteering\n\nStudent Mentorship Program - (SMP)\n\nIndraprastha Institute of Information Technology, Delhi\n\nSep 2021 - Jun 2022 · 10 mos\n\nEducation\n\nLanguages\nEnglish\n\nFull professional proficiency\n\nHindi\n\nNative or bilingual proficiency",
+  "projects": {
+    "raw_text": "FPGA Prototyping using Xilinx IP\n\nJun 2020 – Jul 2022\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nUndergone training in FPGA Architecture and Programming using Verilog HDL with NIELIT. Completed a miniproject \"FPGA Prototyping using Xilinix IP\". Under the project Xilinx Vivado tool was used to integrate modules like Xilinx counter IP, multiplexer, latch, decoder to implement a digital circuit. The code was dumped in to Arty A7 FPGA board XC7A50T-1CSG324\n\nDesign test to identify coupling faults on Bit Lines\n\nMar 2021 – Apr 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nIdentified and emulated the adverse effects of coupling between bit lines in a memory array under different PVT conditions. Emulation was done by injecting voltage stress on Word line, varying the precharge arrival time & aggressor cell supply voltage.\n(Team Size - 3)\n\nRTL to GDS flow for a multifunctional circuit\n\nMar 2021 – Apr 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nThe project was to understand and analyze different stages of VLSI chip design flow. An RTL\ncode for a given problem was written and compiled, code coverage report was generated\nusing Covered. Also generated synthesized netlist file, Power and area report, performed\nstatic timing analysis, logical equivalence checking, Inserted scan-chain in the design for\npost silicon verification (DFT)\n\nDesign and layout of Complex AOI222 complex gate\n\nOct 2020 – Dec 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesigned a complex AOI222 gate. The layout was verified for DRC and LVS checks and Post to pre-layout changes were marginal.\nThe design was made using Cadence virtuoso tool, Simulation were done using Mentor Graphics Eldo. \n(Team Size - 3)\n\nHigh speed OPAMP design with high CMRR\n\nOct 2020 – Dec 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesigned a two stage operational amplifier having high slew rate and high common mode rejection ratio using Cadence Virtuoso with gpdk180 library.\n(Team Size - 2)\n\nB.Tech Major-FIR filter design using seamless pipelining\n\nJun 2016 – Jan 2017\n\n\nAssociated with Jaypee University of Engineering and Technology\n\nThe central design concept is to build FIR filters to be operated at high frequency by introducing pipelining within the structure, Thus improving the performance.",
+    "parsed_projects": [
+      {
+        "title": "FPGA Prototyping using Xilinx IP",
+        "description": "",
+        "duration": "Jun 2020 – Jul 2022",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Undergone training in FPGA Architecture and Programming using Verilog HDL with NIELIT. Completed a miniproject \"FPGA Prototyping using Xilinix IP\". Under the project Xilinx Vivado tool was used to integrate modules like Xilinx counter IP, multiplexer, latch, decoder to implement a digital circuit. The code was dumped in to Arty A7 FPGA board XC7A50T-1CSG324",
+        "description": "Design test to identify coupling faults on Bit Lines",
+        "duration": "Mar 2021 – Apr 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Identified and emulated the adverse effects of coupling between bit lines in a memory array under different PVT conditions. Emulation was done by injecting voltage stress on Word line, varying the precharge arrival time & aggressor cell supply voltage.",
+        "description": "(Team Size - 3) RTL to GDS flow for a multifunctional circuit",
+        "duration": "Mar 2021 – Apr 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "The project was to understand and analyze different stages of VLSI chip design flow. An RTL",
+        "description": "code for a given problem was written and compiled, code coverage report was generated using Covered. Also generated synthesized netlist file, Power and area report, performed static timing analysis, logical equivalence checking, Inserted scan-chain in the design for post silicon verification (DFT) Design and layout of Complex AOI222 complex gate",
+        "duration": "Oct 2020 – Dec 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Designed a complex AOI222 gate. The layout was verified for DRC and LVS checks and Post to pre-layout changes were marginal.",
+        "description": "The design was made using Cadence virtuoso tool, Simulation were done using Mentor Graphics Eldo. (Team Size - 3) High speed OPAMP design with high CMRR",
+        "duration": "Oct 2020 – Dec 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Designed a two stage operational amplifier having high slew rate and high common mode rejection ratio using Cadence Virtuoso with gpdk180 library.",
+        "description": "(Team Size - 2) B.Tech Major-FIR filter design using seamless pipelining",
+        "duration": "Jun 2016 – Jan 2017",
+        "organization": "Jaypee University of Engineering and Technology"
+      },
+      {
+        "title": "The central design concept is to build FIR filters to be operated at high frequency by introducing pipelining within the structure, Thus improving the performance.",
+        "description": "",
+        "duration": "",
+        "organization": ""
+      }
+    ]
+  }
+}

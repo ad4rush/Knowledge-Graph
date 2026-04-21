@@ -1,0 +1,59 @@
+{
+  "student_name": "Parv Arora",
+  "skills": "Design Rule Checking (DRC)\n\nDigital VLSI design\n\nDesign & Layout of OAI221 complex gate using Domino Logic at 65nm technology.\n\nRTL to GDS Flow\n\n\nShow all 5 details\nTiming Closure\n\nRTL to GDS Flow\n\n\nVSD - Physical Design Flow\n\n\nASIC Bootcamp For VLSI Engineer: STA Basic Concepts\n\nTiming\n\nRTL to GDS Flow\n\n\nVSD - Physical Design Flow\n\n\nASIC Bootcamp For VLSI Engineer: STA Basic Concepts\n\nPrimetime\n\nTempus\n\nStatic Timing Analysis\n\nSoC integration\n\nTrace32\n\nEmulation\n\nFPGA prototyping\n\nVLSI Design Flow\n\n1 endorsement\n\nVerilog\n\n2 endorsements\n\nDigital Circuit Design\n\n1 endorsement\n\nMATLAB\n\nPassed LinkedIn Skill Assessment\n\n1 endorsement\n\nXilinx Vivado\n\n1 endorsement\n\nDFT\n\n1 endorsement\n\nCMOS\n\n2 endorsements\n\nCadence Virtuoso Layout Editor\n\n1 endorsement\n\nEDA\n\n1 endorsement\n\nCadence eldo\n\n2 endorsements\n\nLogic Design\n\n1 endorsement\n\nSemiconductor Fabrication\n\n3 endorsements\n\nVirtuoso\n\n1 endorsement\n\nCadence\n\n1 endorsement\n\nSRAM\n\n1 endorsement\n\nPhysical Design\n\n1 endorsement\n\nRTL Design\n\n1 endorsement\n\nLogic Synthesis\n\n1 endorsement\n\nFloorplanning\n\n1 endorsement\n\nCadence Virtuoso\n\n2 endorsements\n\nCAD Tools\n\n1 endorsement\n\nCircuit Design\n\nVery-Large-Scale Integration (VLSI)\n\nFormal Verification\n\n1 endorsement\n\nRTL Verification\n\n1 endorsement",
+  "courses": "Analog CMOS design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDigital VLSI design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nIntegrated Circuit Fabrication\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nMemory Design and Testing\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nNetwork Analysis\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nOptical Communication System\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nSolid State Device\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nVLSI DESIGN FLOW\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi",
+  "other_info": "Test scores\n\nB.Tech\n\nScore: 8.85 CGPA · Aug 2020\n\n\nAssociated with Guru Gobind Singh Indraprastha University\n\nJEE Main\n\nScore: 162 · Apr 2016\n\n\nAssociated with FIITJEE\n\nSenior Secondary School\n\nScore: 92.6% · Mar 2015\n\nAssociated with Dayawati Modi Public School\n\nSecondary School\n\nScore: 9.8 CGPA · Mar 2013\n\nAssociated with Dayawati Modi Public School\n\nVolunteering\n\nStudent Mentorship Program (SMP)\n\nIndraprastha Institute of Information Technology, Delhi\n\nSep 2021 - Jul 2022 · 11 mos\n\nEducation",
+  "projects": {
+    "raw_text": "Reducing Glitch Power in Digital Designs\n\nJun 2021 – Dec 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nThe increased number of glitches in today's ICs led to increasing in power consumption. This is more prominent in circuits such as multipliers & adders. Almost 70% of dynamic power is due to glitches.\nAs low power designs are quite popular nowadays, but at particular threshold voltage, glitches tend to increase irrespective of the structure if we lower the supply voltage.\nSo various techniques have been developed at various stages of the VLSI design flow, such as at architectural level, Netlist level, PNR level, etc., to handle and reduce the power due to glitches.\n\nRTL to GDS Flow\n\nFeb 2021 – May 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nImplemented full RTL to GDS flow for given specification at 90nm technology. The steps included Logical Synthesis (Genus Tool), Formal Equivalence (Conformal low power GXL tool), Static Timing Analysis (Tempus tool) & Design for Test. For Physical Design flow(Encounter tool), Floorplanning, Clock Tree Synthesis, Placement, Routing, ECO, and finally, GDSII was written off after timing closure using Cadence Encounter.\n\nSkills: Design Rule Checking (DRC), Timing Closure, +1 skill\n\nOther contributors\n\nView all contributors\nDesign of Low Leakage 6T SRAM Cell\n\nFeb 2021 – Apr 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\n6T SRAM Cell was designed for given low leakage specification over different temperature ranges.The Various figures of merits such as SNM, Cell Current, Write time, Write margin were calculated & having 6 sigma qualification. Various trade-offs between the different figures of merits were also observed.\n\nSkills: Design Rule Checking (DRC)\n\nLayered ACO OFDM\n\nFeb 2021 – Apr 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nThe BER performance has been analysed in the face of interlayer interference and clipping distortion. The higher layers tend to have worse BER performance due to interference imposed by lower layers, while the first layer has almost same performance as ACO-OFDM. The LACO-OFDM PAPR is significantly influenced by its first layer. Adding more layers in a TD signal results in lower PAPR. To improve PAPR a tone injection method was proposed for LACO OFDM.\n\n Half Latch based Level shifter & Wilson Current Mirror based Level shifter\n\nOct 2020 – Nov 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesigned & simulated Level shifter based on Half latch & Wilson current mirror using Cadence Virtuoso.\nThe circuit was designed at 90nm gpdk technology. The delay and power dissipation was measured for both of the circuits. \n\nDesign & Layout of OAI221 complex gate using Domino Logic at 65nm technology.\n\nOct 2020 – Nov 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesigned a OAI221 complex gate based on Domino Logic. The Layout was made & verified for DRC, LVS checks. The design was made using cadence virtuoso and eldo was used for the simulation results.\nPre-post analysis was done and the difference between the two was minimal.\n\nSkills: Design Rule Checking (DRC)\n\nOther contributors\n\n\n\nView all contributors\nReview paper on Semiconductor Lasers\n\nOct 2020 – Nov 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nThe review paper presents a review of the basic working, different types of available Semiconductor lasers such as DFB, ECDL, MQW etc & its comparative analysis, advantages & disadvantages and their scope in future.\n\nOther contributors",
+    "parsed_projects": [
+      {
+        "title": "Reducing Glitch Power in Digital Designs",
+        "description": "",
+        "duration": "Jun 2021 – Dec 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "The increased number of glitches in today's ICs led to increasing in power consumption. This is more prominent in circuits such as multipliers & adders. Almost 70% of dynamic power is due to glitches.",
+        "description": "As low power designs are quite popular nowadays, but at particular threshold voltage, glitches tend to increase irrespective of the structure if we lower the supply voltage. So various techniques have been developed at various stages of the VLSI design flow, such as at architectural level, Netlist level, PNR level, etc., to handle and reduce the power due to glitches. RTL to GDS Flow",
+        "duration": "Feb 2021 – May 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Implemented full RTL to GDS flow for given specification at 90nm technology. The steps included Logical Synthesis (Genus Tool), Formal Equivalence (Conformal low power GXL tool), Static Timing Analysis (Tempus tool) & Design for Test. For Physical Design flow(Encounter tool), Floorplanning, Clock Tree Synthesis, Placement, Routing, ECO, and finally, GDSII was written off after timing closure using Cadence Encounter.",
+        "description": "Skills: Design Rule Checking (DRC), Timing Closure, +1 skill Other contributors View all contributors Design of Low Leakage 6T SRAM Cell",
+        "duration": "Feb 2021 – Apr 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "6T SRAM Cell was designed for given low leakage specification over different temperature ranges.The Various figures of merits such as SNM, Cell Current, Write time, Write margin were calculated & having 6 sigma qualification. Various trade-offs between the different figures of merits were also observed.",
+        "description": "Skills: Design Rule Checking (DRC) Layered ACO OFDM",
+        "duration": "Feb 2021 – Apr 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "The BER performance has been analysed in the face of interlayer interference and clipping distortion. The higher layers tend to have worse BER performance due to interference imposed by lower layers, while the first layer has almost same performance as ACO-OFDM. The LACO-OFDM PAPR is significantly influenced by its first layer. Adding more layers in a TD signal results in lower PAPR. To improve PAPR a tone injection method was proposed for LACO OFDM.",
+        "description": "Half Latch based Level shifter & Wilson Current Mirror based Level shifter",
+        "duration": "Oct 2020 – Nov 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Designed & simulated Level shifter based on Half latch & Wilson current mirror using Cadence Virtuoso.",
+        "description": "The circuit was designed at 90nm gpdk technology. The delay and power dissipation was measured for both of the circuits. Design & Layout of OAI221 complex gate using Domino Logic at 65nm technology.",
+        "duration": "Oct 2020 – Nov 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Designed a OAI221 complex gate based on Domino Logic. The Layout was made & verified for DRC, LVS checks. The design was made using cadence virtuoso and eldo was used for the simulation results.",
+        "description": "Pre-post analysis was done and the difference between the two was minimal. Skills: Design Rule Checking (DRC) Other contributors View all contributors Review paper on Semiconductor Lasers",
+        "duration": "Oct 2020 – Nov 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "The review paper presents a review of the basic working, different types of available Semiconductor lasers such as DFB, ECDL, MQW etc & its comparative analysis, advantages & disadvantages and their scope in future.",
+        "description": "Other contributors",
+        "duration": "",
+        "organization": ""
+      }
+    ]
+  }
+}

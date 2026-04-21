@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Parser ER Diagram</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .er-diagram {
+            position: relative;
+            width: 100%;
+            height: 900px;
+            background: #fafbfc;
+            border: 2px solid #e1e8ed;
+            border-radius: 15px;
+            overflow: auto;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .entity {
+            position: absolute;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            border: 3px solid #2d3436;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .entity:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .entity.primary {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            border-color: #2d3436;
+            transform: scale(1.1);
+        }
+
+        .entity-header {
+            font-weight: bold;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .entity-body {
+            font-size: 12px;
+            color: white;
+            line-height: 1.4;
+        }
+
+        .pk {
+            font-weight: bold;
+            text-decoration: underline;
+            color: #fff3cd;
+        }
+
+        .fk {
+            font-style: italic;
+            color: #d1ecf1;
+        }
+
+        .relationship-line {
+            position: absolute;
+            background: #2d3436;
+            z-index: 1;
+        }
+
+        .relationship-label {
+            position: absolute;
+            background: #fff;
+            padding: 4px 8px;
+            border: 2px solid #2d3436;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #2d3436;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .legend {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            border-left: 5px solid #74b9ff;
+        }
+
+        .legend h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .legend-item {
+            display: inline-block;
+            margin: 5px 15px 5px 0;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 8px;
+            vertical-align: middle;
+            border: 2px solid #2d3436;
+        }
+
+        .primary-color {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+        }
+
+        .entity-color {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+        }
+
+        .zoom-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 20;
+        }
+
+        .zoom-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 2px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .zoom-btn:hover {
+            background: #0984e3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">📊 Resume Parser Database ER Diagram</h1>
+        
+        <div class="er-diagram" id="diagram">
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="zoomIn()">+</button>
+                <button class="zoom-btn" onclick="zoomOut()">-</button>
+                <button class="zoom-btn" onclick="resetZoom()">Reset</button>
+            </div>
+
+            <!-- Central Candidate Entity -->
+            <div class="entity primary" style="top: 350px; left: 600px; width: 180px;">
+                <div class="entity-header">CANDIDATE</div>
+                <div class="entity-body">
+                    <span class="pk">candidate_id (PK)</span><br>
+                    name<br>
+                    dob<br>
+                    address<br>
+                    email<br>
+                    github<br>
+                    linkedin<br>
+                    leetcode<br>
+                    branch<br>
+                    batch<br>
+                    domain_raw
+                </div>
+            </div>
+
+            <!-- Education Entity -->
+            <div class="entity" style="top: 50px; left: 300px; width: 160px;">
+                <div class="entity-header">EDUCATION</div>
+                <div class="entity-body">
+                    <span class="pk">edu_id (PK)</span><br>
+                    <span class="fk">candidate_id (FK)</span><br>
+                    level<br>
+                    college_name<br>
+                    branch<br>
+                    batch<br>
+                    cgpa<br>
+                    graduation_date<br>
+                    status
+                </div>
+            </div>
+
+            <!-- Exam Entity -->
+            <div class="entity" style="top: 50px; left: 900px; width: 160px;">
+                <div class="entity-header">EXAM</div>
+                <div class="entity-body">
+                    <span class="pk">exam_id (PK)</span><br>
+                    <span class="fk">candidate_id (FK)</span><br>
+                    exam_name<br>
+                    score_or_percent<br>
+                    rank<br>
+                    equivalent_jee_rank
+                </div>
+            </div>
+
+            <!-- Project Entity -->
+            <div class="entity" style="top: 200px; left: 50px; width: 160px;">
+                <div class="entity-header">PROJECT</div>
+                <div class="entity-body">
+                    <span class="pk">project_id (PK)</span><br>
+                    <span class="fk">candidate_id (FK)</span><br>
+                    type<br>
+                    title<br>
+                    description<br>
+                    tools<br>
+                    languages<br>
+                    coursework_used<br>
+                    link
+                </div>
+            </div>
+
+            <!-- Work Experience Entity -->
+            <div class="entity" style="top: 600px; left: 200px; width: 180px;">
+                <div class="entity-header">WORK EXPERIENCE</div>
+                <div class="entity-body">
+                    <span class="pk">work_id (PK)</span><br>
+                    <span class="fk">candidate_id (FK)</span><br>
+                    company_name<br>
+                    title<br>
+                    description<br>
+                    tools<br>
+                    languages<br>
+                    coursework_used<br>
+                    link
+                </div>
+            </div>
+
+            <!-- Research Paper Entity -->
+            <div class="entity" style="top: 600px; left: 1000px; width: 180px;">
+                <div class="entity-header">RESEARCH PAPER</div>
+                <div class="entity-body">
+                    <span class="pk">paper_id (PK)</span><br>
+                    <span class="fk">candidate_id (FK)</span><br>
+                    title<br>
+                    description<br>
+                    published_in<br>
+                    tools<br>
+                    languages<br>
+                    coursework_used<br>
+                    link
+                </div>
+            </div>
+
+            <!-- Skill Entity -->
+            <div class="entity" style="top: 200px; left: 1150px; width: 160px;">
+                <div class="entity-header">SKILL</div>
+                <div class="entity-body">
+                    <span class="pk">skill_id (PK)</span><br>
+                    <span class="fk">candidate_id (FK)</span><br>
+                    category<br>
+                    name<br>
+                    score
+                </div>
+            </div>
+
+            <!-- Relationship Lines and Labels -->
+            <!-- Candidate to Education (center to center) -->
+            <div class="relationship-line" style="top: 435px; left: 600px; width: 250px; height: 3px; transform: rotate(-50deg); transform-origin: left center;"></div>
+            <div class="relationship-label" style="top: 290px; left: 450px;">1:N</div>
+
+            <!-- Candidate to Exam (center to center) -->
+            <div class="relationship-line" style="top: 360px; left: 780px; width: 220px; height: 3px; transform: rotate(-30deg); transform-origin: left center;"></div>
+            <div class="relationship-label" style="top: 250px; left: 850px;">1:N</div>
+
+            <!-- Candidate to Project (center to center) -->
+            <div class="relationship-line" style="top: 420px; left: 210px; width: 390px; height: 3px;"></div>
+            <div class="relationship-label" style="top: 410px; left: 380px;">1:N</div>
+
+            <!-- Candidate to Work Experience (center to center) -->
+            <div class="relationship-line" style="top: 500px; left: 600px; width: 290px; height: 3px; transform: rotate(50deg); transform-origin: left center;"></div>
+            <div class="relationship-label" style="top: 580px; left: 450px;">1:N</div>
+
+            <!-- Candidate to Research Paper (center to center) -->
+            <div class="relationship-line" style="top: 500px; left: 780px; width: 310px; height: 3px; transform: rotate(-50deg); transform-origin: left center;"></div>
+            <div class="relationship-label" style="top: 580px; left: 950px;">1:N</div>
+
+            <!-- Candidate to Skill (center to center) -->
+            <div class="relationship-line" style="top: 380px; left: 780px; width: 370px; height: 3px; transform: rotate(-10deg); transform-origin: left center;"></div>
+            <div class="relationship-label" style="top: 350px; left: 970px;">1:N</div>
+        </div>
+
+        <div class="legend">
+            <h3>📋 Legend</h3>
+            <div class="legend-item">
+                <span class="legend-color primary-color"></span>
+                <strong>Primary Entity (Candidate)</strong>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color entity-color"></span>
+                <strong>Related Entities</strong>
+            </div>
+            <div class="legend-item">
+                <strong>PK:</strong> Primary Key
+            </div>
+            <div class="legend-item">
+                <strong>FK:</strong> Foreign Key
+            </div>
+            <div class="legend-item">
+                <strong>1:N:</strong> One-to-Many Relationship
+            </div>
+            
+            <h4>🎯 Key Features:</h4>
+            <ul>
+                <li><strong>Normalized Design:</strong> Separate entities for projects, work experience, and research papers</li>
+                <li><strong>Skill Categories:</strong> net_language, net_tool, domain, soft_skill</li>
+                <li><strong>Education Levels:</strong> UG1, UG2, PG1, PG2, PhD</li>
+                <li><strong>Exam Support:</strong> Includes equivalent JEE rank calculation</li>
+                <li><strong>Flexible Storage:</strong> Raw and processed data accommodation</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let zoomLevel = 1;
+        let isDragging = false;
+        let dragElement = null;
+        let startX = 0;
+        let startY = 0;
+        let startLeft = 0;
+        let startTop = 0;
+        let showGrid = false;
+
+        const diagram = document.getElementById('diagram');
+
+        // Drag functionality
+        function initDrag() {
+            const draggables = document.querySelectorAll('.entity, .relationship-line, .relationship-label');
+            
+            draggables.forEach(element => {
+                element.addEventListener('mousedown', startDrag);
+            });
+
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+        }
+
+        function startDrag(e) {
+            e.preventDefault();
+            isDragging = true;
+            dragElement = e.target.closest('.entity, .relationship-line, .relationship-label');
+            
+            dragElement.classList.add('dragging');
+            
+            startX = e.clientX;
+            startY = e.clientY;
+            
+            const rect = dragElement.getBoundingClientRect();
+            const diagramRect = diagram.getBoundingClientRect();
+            
+            startLeft = rect.left - diagramRect.left;
+            startTop = rect.top - diagramRect.top;
+        }
+
+        function drag(e) {
+            if (!isDragging || !dragElement) return;
+            
+            e.preventDefault();
+            
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+            
+            let newLeft = startLeft + deltaX;
+            let newTop = startTop + deltaY;
+            
+            // Grid snap (if enabled)
+            if (showGrid) {
+                newLeft = Math.round(newLeft / 20) * 20;
+                newTop = Math.round(newTop / 20) * 20;
+            }
+            
+            // Boundary constraints
+            const diagramRect = diagram.getBoundingClientRect();
+            const elementRect = dragElement.getBoundingClientRect();
+            
+            newLeft = Math.max(0, Math.min(newLeft, diagramRect.width - elementRect.width));
+            newTop = Math.max(0, Math.min(newTop, diagramRect.height - elementRect.height));
+            
+            dragElement.style.left = newLeft + 'px';
+            dragElement.style.top = newTop + 'px';
+        }
+
+        function stopDrag() {
+            if (dragElement) {
+                dragElement.classList.remove('dragging');
+                dragElement = null;
+            }
+            isDragging = false;
+        }
+
+        // Control functions
+        function resetPositions() {
+            // Reset to original positions
+            const positions = {
+                'CANDIDATE': { top: '350px', left: '600px' },
+                'EDUCATION': { top: '50px', left: '300px' },
+                'EXAM': { top: '50px', left: '900px' },
+                'PROJECT': { top: '200px', left: '50px' },
+                'WORK EXPERIENCE': { top: '600px', left: '200px' },
+                'RESEARCH PAPER': { top: '600px', left: '1000px' },
+                'SKILL': { top: '200px', left: '1150px' }
+            };
+
+            document.querySelectorAll('.entity').forEach(entity => {
+                const header = entity.querySelector('.entity-header').textContent;
+                if (positions[header]) {
+                    entity.style.top = positions[header].top;
+                    entity.style.left = positions[header].left;
+                }
+            });
+
+            // Reset relationship lines and labels to original positions
+            const lines = document.querySelectorAll('.relationship-line');
+            const labels = document.querySelectorAll('.relationship-label');
+            
+            // You can manually adjust these or implement automatic line drawing
+            console.log('Positions reset - you may need to manually adjust relationship lines');
+        }
+
+        function toggleGrid() {
+            showGrid = !showGrid;
+            const btn = event.target;
+            btn.classList.toggle('active');
+            btn.textContent = showGrid ? 'Grid ON' : 'Grid';
+            
+            if (showGrid) {
+                diagram.style.backgroundImage = 'radial-gradient(circle, #ddd 1px, transparent 1px)';
+                diagram.style.backgroundSize = '20px 20px';
+            } else {
+                diagram.style.backgroundImage = 'none';
+            }
+        }
+
+        function saveLayout() {
+            const layout = {};
+            
+            document.querySelectorAll('.entity, .relationship-line, .relationship-label').forEach(element => {
+                const id = element.querySelector('.entity-header')?.textContent || 
+                          element.className.includes('relationship-line') ? 'line-' + Array.from(document.querySelectorAll('.relationship-line')).indexOf(element) :
+                          'label-' + Array.from(document.querySelectorAll('.relationship-label')).indexOf(element);
+                          
+                layout[id] = {
+                    top: element.style.top,
+                    left: element.style.left,
+                    transform: element.style.transform
+                };
+            });
+            
+            console.log('Layout saved:', layout);
+            alert('Layout saved to console! Check browser developer tools.');
+        }
+
+        function zoomIn() {
+            zoomLevel += 0.1;
+            diagram.style.transform = `scale(${zoomLevel})`;
+            diagram.style.transformOrigin = 'top left';
+        }
+
+        function zoomOut() {
+            if (zoomLevel > 0.5) {
+                zoomLevel -= 0.1;
+                diagram.style.transform = `scale(${zoomLevel})`;
+                diagram.style.transformOrigin = 'top left';
+            }
+        }
+
+        // Initialize drag functionality when page loads
+        document.addEventListener('DOMContentLoaded', initDrag);
+
+        // Prevent default drag behavior on images and other elements
+        document.addEventListener('dragstart', e => e.preventDefault());
+    </script>
+</body>
+</html>

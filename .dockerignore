@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+node_modules/
+frontend/node_modules/
+.env
+*.faiss
+resume_metadata.json
+.git/
+.vscode/
+*.log

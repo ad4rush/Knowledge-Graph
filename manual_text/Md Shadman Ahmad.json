@@ -1,0 +1,47 @@
+{
+  "student_name": "Md Shadman Ahmad",
+  "skills": "MOSFET\n\n\n2 experiences at Texas Instruments and 1 other company\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nSemiconductor Device\n\n\n2 experiences at Texas Instruments and 1 other company\n\nMonte Carlo Simulation\n\n\n2 experiences at Texas Instruments and 1 other company\n\nLogic Synthesis\n\n\n2 experiences at Texas Instruments and 1 other company\n\nMixed-Signal Integrated Circuits\n\n\nMemory Designer Engineer  at Texas Instruments\n\nLow-power Design\n\n\nMemory Designer Engineer  at Texas Instruments\n\nRTL Design\n\n\nMemory Designer Engineer  at Texas Instruments\n\nObject-Oriented Programming (OOP)\n\n\nMemory Designer Engineer  at Texas Instruments\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nSPICE\n\n\n2 experiences at Texas Instruments and 1 other company\n\nEquivalence Checking\n\n\n2 experiences at Texas Instruments and 1 other company\n\nPerl\n\n\nMemory Designer Engineer  at Texas Instruments\n\nShell Scripting\n\n\n2 experiences at Texas Instruments and 1 other company\n\nCadence Spectre\n\n\nMemory Designer Engineer  at Texas Instruments\n\nSRAM\n\n\nMemory Designer Engineer  at Texas Instruments\n\nCircuit Design\n\n\nMemory Designer Engineer  at Texas Instruments\n\nPython (Programming Language)\n\n1 endorsement\n\nVerilog\n\nCadence Virtuoso\n\n1 endorsement\n\nC (Programming Language)\n\nCadence Tempus\n\nMentor Graphics Eldo\n\n1 endorsement\n\nSynopsys Primetime\n\nCadence genus\n\nXilinx Vivado\n\n1 endorsement\n\nXilinx HLX",
+  "courses": "Advanced Embedded Logic Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nAnalog CMOS Circuit Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nComputer Architecture\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDigital VLSI Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nIntegrated Circuit Fabrication\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nMemory Design and Test\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nObject Oriented Programming and Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nSolid State Devices\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nVLSI Design Flow\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi",
+  "other_info": "Volunteering\n\nTeaching Assistant for VLSI revisited Course\n\nIndraprastha Institute of Information Technology, Delhi\n\nJun 2021 - Jul 2021 · 2 mos\n\nEducation\n\nWorked as a Teaching Assistant for the Digital VLSI Design course helping students with schematic capture for Standard Cell, layout design, and pre and post layout simulation with PPA analysis.",
+  "projects": {
+    "raw_text": "High Speed Dual Port Memory Compiler Design\n\nApr 2021 – Present\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nPart of a team working on High Speed Dual Port Memory Compiler\ninvolving the complete design of Memory Core (using bitline hierarchy), I/Os,\nControl block and Row Decoders. Specific role: “Testability of the\nmemory” .Screening circuit for asynchronous read and write disturb\nhaving configurable delays. Design of Scan Folps, BIST mux and Memory\nBypass circuitry.\n\nDesign Test to identify WL coupling fault in dual port SRAM in 65 nm Technology\n\nFeb 2021 – Apr 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign of dual port 8T SRAM Array with specified FOMs- read current,\nwrite margin and SNM. Stimuli to test the effect of WL coupling. Analysis\non different aspect ratio of the array with variation in PVT conditions.\nDesign of a detector circuit to detect the coupling fault. Layout of the\nSRAM Cell and detector circuit.\n\nHW-SW co-design of Scalable-Floating-Point Matrix Inversion Using Xilinx SDSoC\n\nJan 2021 – Apr 2021\n\nHighly efficient and scalable hardware implementation of complex\nmatrix inversion Algorithm using LUP decomposition.\n\nRTL to GDS for ASIC Design Flow using 90 nm PDK\n\nJan 2021 – Apr 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nRTL coding, code coverage, RTL simulation, logic synthesis, logical\nequivalence, STA, scan chain insertion, floor planning,\nplacement, CTS, routing GDS and timing closure.\n\nDesign of a TSPC (True Single Phase Clock) Flipflop in 65 nm Technology\n\nOct 2020 – Dec 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nCharacterization of delays, setup, hold and metastability window. Power-\nPerformance -Area Analysis with pre and post layout simulations.\n\nExtended -Implementation of Scan TSPC FF and its comparison with Static\ntransmission gate based Scan FF.\n\nParcel Delivery bot using Arduino UNO\n\nApr 2016 – Jun 2016\n\nShow project\nIt was a self-project for a tech-fest in Jadavpur University. The bot is assigned the task to collect parcels from the maze and deliver it to its destination using the shortest path. Arduino UNO was used as the microprocessor. IR  transmitter and receiver pair array were used for line detection and ultrasonic sensor for parcel detection. The Left Hand on the Wall algorithm was used for determining the shortest path.\n\nDesign of a Band-Gap Voltage Regulator with two stage Opamp in 65 nm Technology\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nA high gain Two stage Opamp with miller compensation and nulling resistor as the Opamp for BGR circuit having good temperature coefficient and PSSR characteristics.",
+    "parsed_projects": [
+      {
+        "title": "High Speed Dual Port Memory Compiler Design",
+        "description": "",
+        "duration": "Apr 2021 – Present",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Part of a team working on High Speed Dual Port Memory Compiler",
+        "description": "involving the complete design of Memory Core (using bitline hierarchy), I/Os, memory” .Screening circuit for asynchronous read and write disturb having configurable delays. Design of Scan Folps, BIST mux and Memory Bypass circuitry. Design Test to identify WL coupling fault in dual port SRAM in 65 nm Technology",
+        "duration": "Feb 2021 – Apr 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design of dual port 8T SRAM Array with specified FOMs- read current,",
+        "description": "write margin and SNM. Stimuli to test the effect of WL coupling. Analysis on different aspect ratio of the array with variation in PVT conditions. Design of a detector circuit to detect the coupling fault. Layout of the SRAM Cell and detector circuit. HW-SW co-design of Scalable-Floating-Point Matrix Inversion Using Xilinx SDSoC Highly efficient and scalable hardware implementation of complex matrix inversion Algorithm using LUP decomposition. RTL to GDS for ASIC Design Flow using 90 nm PDK",
+        "duration": "Jan 2021 – Apr 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "RTL coding, code coverage, RTL simulation, logic synthesis, logical",
+        "description": "equivalence, STA, scan chain insertion, floor planning, placement, CTS, routing GDS and timing closure. Design of a TSPC (True Single Phase Clock) Flipflop in 65 nm Technology",
+        "duration": "Oct 2020 – Dec 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Characterization of delays, setup, hold and metastability window. Power-",
+        "description": "Performance -Area Analysis with pre and post layout simulations. Extended -Implementation of Scan TSPC FF and its comparison with Static transmission gate based Scan FF. Parcel Delivery bot using Arduino UNO Show project It was a self-project for a tech-fest in Jadavpur University. The bot is assigned the task to collect parcels from the maze and deliver it to its destination using the shortest path. Arduino UNO was used as the microprocessor. IR  transmitter and receiver pair array were used for line detection and ultrasonic sensor for parcel detection. The Left Hand on the Wall algorithm was used for determining the shortest path. Design of a Band-Gap Voltage Regulator with two stage Opamp in 65 nm Technology",
+        "duration": "Apr 2016 – Jun 2016",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "A high gain Two stage Opamp with miller compensation and nulling resistor as the Opamp for BGR circuit having good temperature coefficient and PSSR characteristics.",
+        "description": "",
+        "duration": "",
+        "organization": ""
+      }
+    ]
+  }
+}

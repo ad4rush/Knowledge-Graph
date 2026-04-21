@@ -1,0 +1,15 @@
+services:
+  resume-app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEYS=${GEMINI_API_KEYS:-}
+    volumes:
+      - ./linkedin_pdfs:/app/linkedin_pdfs
+      - ./output:/app/output
+      - ./manual_text:/app/manual_text
+      - ./photos:/app/photos
+      - ./resume_index.faiss:/app/resume_index.faiss
+      - ./resume_metadata.json:/app/resume_metadata.json
+    restart: unless-stopped

@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+*.pyo
+node_modules/
+.env
+*.log
+.vscode/
+.idea/
+
+# Don't commit FAISS index (rebuilt on server)
+resume_index.faiss
+resume_metadata.json
+
+# Don't commit PDFs (uploaded on server)
+linkedin_pdfs/*.pdf
+
+# Keep frontend dist for deployment
+# !frontend/dist/

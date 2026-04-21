@@ -1,0 +1,41 @@
+{
+  "student_name": "Manu Pradhan",
+  "skills": "C (Programming Language)\n\nPassed LinkedIn Skill Assessment\n\n1 endorsement\n\nVerilog\n\n1 endorsement",
+  "courses": null,
+  "other_info": null,
+  "projects": {
+    "raw_text": "Design of Complex Static Gate OAI222\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nGuide: Dr. Anuj Grover\n\tWorked on sizing the complex gate with two driver invertors to achieve the output rise and fall time less than 50ps for the load of 50fF and input slope of 10ps.\n\tDesigned layout consuming area of 12.492 sq.um in 12 tracks.\n\tReported output contamination delay and propagation delay (both rise and fall) at load of 50Ff.\n\tIncluded post layout results after PEX extraction\n\nDesign of High speed SRAM (8TSRAM and 6TSRAM cell) array\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nGuide: Dr. Anuj Grover\n Worked on sizing of 6TSRAM and 8TSRAM (1R-1W) for satisfying cell current of at least 50uA and cell leakage not more \nthan 100pA.\n Qualified SNM for 6-sigma range.\n Compared time for differential voltage creation between 256 rows and 32 rows per bank.\n Designed layout for 8TSRAM cell with height of 0.61um consuming area of 1.656 sq.um\n\nHigh Speed Dual Port SRAM Memory Compiler\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nGuide: Dr. Anuj Grover\n Did Literature review to understand the problems of dual port SRAM.\n Implemented different Bitline Hierarchy schemes and compared them on the basis of performance, power and area.\n Worked on Bitline Replica path for the generation of sense enable signal and reset signal.\n\nRTL to GDS flow for given functional specifications\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nGuide: Dr. Sneh Saurabh\n Prepared an RTL Code for 4 bit comparator, Bitwise XOR, Frequency Divider and a demultiplexer.\n Modified constraint file to generate netlists for best timing and best area. \n Performed STA (graph based analysis and path based analysis) to ensure that paths are operational at the given operating \nfrequency. \n Formal Equivalence checking confirmed the validity for the netlist with the RTL. \n Executed final GDS after series of physical design steps such as Floor planning, Power Network Design, Placement, CTS, \nand Routing.",
+    "parsed_projects": [
+      {
+        "title": "Design of Complex Static Gate OAI222",
+        "description": "",
+        "duration": "",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Guide: Dr. Anuj Grover",
+        "description": "\tWorked on sizing the complex gate with two driver invertors to achieve the output rise and fall time less than 50ps for the load of 50fF and input slope of 10ps. \tDesigned layout consuming area of 12.492 sq.um in 12 tracks. \tReported output contamination delay and propagation delay (both rise and fall) at load of 50Ff. \tIncluded post layout results after PEX extraction Design of High speed SRAM (8TSRAM and 6TSRAM cell) array",
+        "duration": "",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Guide: Dr. Anuj Grover",
+        "description": " Worked on sizing of 6TSRAM and 8TSRAM (1R-1W) for satisfying cell current of at least 50uA and cell leakage not more than 100pA.  Qualified SNM for 6-sigma range.  Compared time for differential voltage creation between 256 rows and 32 rows per bank.  Designed layout for 8TSRAM cell with height of 0.61um consuming area of 1.656 sq.um High Speed Dual Port SRAM Memory Compiler",
+        "duration": "",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Guide: Dr. Anuj Grover",
+        "description": " Did Literature review to understand the problems of dual port SRAM.  Implemented different Bitline Hierarchy schemes and compared them on the basis of performance, power and area.  Worked on Bitline Replica path for the generation of sense enable signal and reset signal. RTL to GDS flow for given functional specifications",
+        "duration": "",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Guide: Dr. Sneh Saurabh",
+        "description": " Prepared an RTL Code for 4 bit comparator, Bitwise XOR, Frequency Divider and a demultiplexer.  Modified constraint file to generate netlists for best timing and best area.  Performed STA (graph based analysis and path based analysis) to ensure that paths are operational at the given operating frequency.  Formal Equivalence checking confirmed the validity for the netlist with the RTL.  Executed final GDS after series of physical design steps such as Floor planning, Power Network Design, Placement, CTS, and Routing.",
+        "duration": "",
+        "organization": ""
+      }
+    ]
+  }
+}

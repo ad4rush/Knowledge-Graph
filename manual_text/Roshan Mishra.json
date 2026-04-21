@@ -1,0 +1,23 @@
+{
+  "student_name": "Roshan Mishra",
+  "skills": "Physical Design\n\nMemory design \n\nRTL Design\n\nVery-Large-Scale Integration (VLSI)\n\nField-Programmable Gate Arrays (FPGA)\n\nVerilog\n\nC (Programming Language)\n\nEmbedded Systems\n\nXilinx Vivado\n\nDigital Circuit Design\n\nCadence Virtuoso\n\nCadence Virtuoso Layout Editor\n\nCadence Encounter\n\nSemiconductor Fabrication\n\nSynopsys Primetime\n\nStatic Timing Analysis\n\nConformal LEC\n\nAXI\n\nLogic Synthesis",
+  "courses": "Advanced Embedded Logic Design\n\nAnalog CMOS Design \n\nDigital Hardware Design\n\nDigital VLSI Design\n\nIC fabrication \n\nMemory Designing And Testing \n\nVLSI Design Flow\n\nsolid state devices",
+  "other_info": null,
+  "projects": {
+    "raw_text": "Design L1 - L2 Cache sub system (Memory Design)\n\nAug 2020 – May 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nCompare PPA of different types/ hierarchy of 10-bit row address decoding schemes in virtuoso in 65 nm technology\n\nFeb 2020 – May 2020\n\nComplete RTL to GDS flow\n\nFeb 2020 – May 2020\n\nAdvanced Embedded system design, Create a Vivado project for a Zynq system and use IP integrator, Use SDK to create C-based software for ARM, integrating multiple AXI GPIO IPs in PL with the ARM processor and establish the communication between them\n\nJan 2020 – Mar 2020\n\nImplementation of multi bandit algorithms ucb,ucb-t,ucb-v on Xilinx Vivado HLS \n\nNov 2019 – Dec 2019\n\nImplementation of OAI32 complex logic gate using pass transistor logic in virtuoso in 65 nm technology\n\nSep 2019 – Nov 2019\n\nVGA game : Save The Dino using Basys 3 FPGA board\n\nSep 2019 – Oct 2019\n\nPerformance comparison of cvsl full adder using multiple threshold technique (BTech Major project)\n\nJan 2019 – Jun 2019\n\nProgrammable Priority Encoder using verilog\n\nDec 2017 – Jan 2018",
+    "parsed_projects": [
+      {
+        "title": "Design L1 - L2 Cache sub system (Memory Design)",
+        "description": "",
+        "duration": "Aug 2020 – May 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Compare PPA of different types/ hierarchy of 10-bit row address decoding schemes in virtuoso in 65 nm technology",
+        "description": "Complete RTL to GDS flow Advanced Embedded system design, Create a Vivado project for a Zynq system and use IP integrator, Use SDK to create C-based software for ARM, integrating multiple AXI GPIO IPs in PL with the ARM processor and establish the communication between them Implementation of multi bandit algorithms ucb,ucb-t,ucb-v on Xilinx Vivado HLS Implementation of OAI32 complex logic gate using pass transistor logic in virtuoso in 65 nm technology VGA game : Save The Dino using Basys 3 FPGA board Performance comparison of cvsl full adder using multiple threshold technique (BTech Major project) Programmable Priority Encoder using verilog",
+        "duration": "Dec 2017 – Jan 2018",
+        "organization": ""
+      }
+    ]
+  }
+}

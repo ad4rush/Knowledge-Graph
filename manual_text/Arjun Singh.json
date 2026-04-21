@@ -1,0 +1,35 @@
+{
+  "student_name": "Arjun Singh",
+  "skills": "Microsoft Office\n\nResearch\n\nTeamwork\n\nC\n\nMatlab\n\nAtmel AVR\n\nMacro Economics \n\nMicro Economics \n\n2 endorsements",
+  "courses": null,
+  "other_info": "Volunteering\n\nVolunteer\n\nArt of Living\n\nJan 2017 - Present · 8 yrs 11 mos\n\nSocial Services\n\nTeaching\n\nCoordinator Of Volunteers\n\nIETE - Institution of Electronics and Telecommunications Engineers , MAIT ,Delhi\n\nJan 2018 - Feb 2020 · 2 yrs 2 mos\n\nEducation\n\nMAIT IETE Students Chapter\n\nHonors & awards\nKulapati K.M Munshi Award in Mathematics\n\nIssued by Bharatiya Vidya Bhavan's · Mar 2013",
+  "projects": {
+    "raw_text": "Substrate Integrated Waveguide based Antenna using HFSS software.\n\nJan 2020 – Present\n\n\nAssociated with Maharaja Agrasen Institute Of Technology\n\nDesign and fabrication of microstrip patch antenna for RFID application using HFSS software.\n\nAug 2019 – Dec 2019\n\n\nAssociated with Maharaja Agrasen Institute Of Technology\n\nDATA ACQUISITION AND GRAPHICAL VISUALIZATION ON MATLAB\n\nJun 2019 – Jul 2019\n\nAssociated with Solid State Physics Laboratory , DRDO, Delhi , India\n\nI have created a code, which reads the automatically generated files of *.id \nextension. The code can then be used to plot the V-I Characteristics for each of \nVgs of the data present in the data file.\nA Graphical User Interface (GUI) has also been created using GUIDE tool in \nMATLAB so that the user can access the file and visualize the plot generated more \neasily.\nPlots of multiple files can be superimposed over one another so that the user can \ncompare the plots and have better understanding of the data plotted.\nAny number of files can be selected and the plots can be given any colour of \nuser’s choice.\n\nMapping Your Surroundings Using MATLAB and Arduino\n\nFeb 2019 – May 2019",
+    "parsed_projects": [
+      {
+        "title": "Substrate Integrated Waveguide based Antenna using HFSS software.",
+        "description": "",
+        "duration": "Jan 2020 – Present",
+        "organization": "Maharaja Agrasen Institute Of Technology"
+      },
+      {
+        "title": "Design and fabrication of microstrip patch antenna for RFID application using HFSS software.",
+        "description": "",
+        "duration": "Aug 2019 – Dec 2019",
+        "organization": "Maharaja Agrasen Institute Of Technology"
+      },
+      {
+        "title": "DATA ACQUISITION AND GRAPHICAL VISUALIZATION ON MATLAB",
+        "description": "",
+        "duration": "Jun 2019 – Jul 2019",
+        "organization": "Solid State Physics Laboratory , DRDO, Delhi , India"
+      },
+      {
+        "title": "I have created a code, which reads the automatically generated files of *.id",
+        "description": "extension. The code can then be used to plot the V-I Characteristics for each of Vgs of the data present in the data file. A Graphical User Interface (GUI) has also been created using GUIDE tool in MATLAB so that the user can access the file and visualize the plot generated more easily. Plots of multiple files can be superimposed over one another so that the user can compare the plots and have better understanding of the data plotted. Any number of files can be selected and the plots can be given any colour of user’s choice. Mapping Your Surroundings Using MATLAB and Arduino",
+        "duration": "Feb 2019 – May 2019",
+        "organization": ""
+      }
+    ]
+  }
+}

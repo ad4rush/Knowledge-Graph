@@ -1,0 +1,65 @@
+{
+  "student_name": "Ajay Prakash Pandey",
+  "skills": "RTL Verification\n\n\nSenior GPU Design Verification Engineer at Qualcomm\n\nSystem Verilog\n\n\nSenior GPU Design Verification Engineer at Qualcomm\n\nFunctional Verification\n\n\nSenior GPU Design Verification Engineer at Qualcomm\n\nSMMU\n\n\n2 experiences at Qualcomm\n\nGraphics Processing Unit\n\n\nGPU Design Verification Engineer at Qualcomm\n\n1 endorsement\n\nMemory Design\n\n\nIndraprastha Institute of Information Technology, Delhi\n\n1 endorsement\n\nComputer Architecture\n\n\n3 experiences at Qualcomm and 1 other company\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nSemiconductor Engineering\n\n1 endorsement\n\nRTL Development\n\n\n4 experiences at Qualcomm and 1 other company\n\n\nIndraprastha Institute of Information Technology, Delhi\n\n\nSystem Verilog for Verification\n\n\nShow all 4 details\nRTL Design\n\n\n2 experiences at Qualcomm\n\n\nIndraprastha Institute of Information Technology, Delhi\n\n1 endorsement\n\nApplication-Specific Integrated Circuits (ASIC)\n\n1 endorsement\n\nUniversal Verification Methodology (UVM)\n\n\n2 experiences at Qualcomm\n\n\nUniversal Verification Methodology - UVM\n\n1 endorsement\n\nVerdi\n\n\nGPU Design Verification Engineer at Qualcomm\n\n1 endorsement\n\nVery-Large-Scale Integration (VLSI)\n\nLinux\n\nSystemVerilog\n\n\n2 experiences at Qualcomm\n\n\nIndraprastha Institute of Information Technology, Delhi\n\n\nSystem Verilog for Verification\n\nCadence Virtuoso\n\n1 endorsement\n\nEldo\n\n1 endorsement\n\nC\n\nPassed LinkedIn Skill Assessment\n\n2 endorsements\n\nElectronics\n\n1 endorsement\n\nDigital Electronics\n\nMicrosoft Office\n\n2 endorsements\n\nArduino\n\n5 endorsements\n\nPython\n\n1 endorsement\n\nVHDL\n\nEmbedded Systems\n\nHTML\n\nVerilog\n\n\nGPU Design Verification Engineer at Qualcomm\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nBootstrap\n\nLeadership\n\n2 endorsements\n\nPublic Speaking\n\n1 endorsement\n\nManagement\n\n1 endorsement\n\nTeam Building\n\nInternet of Things\n\nAtmel AVR\n\nRaspberry Pi\n\nCadence Virtuoso Layout Editor\n\nCadence Spectre\n\ndigital vlsi\n\nStatic Timing Analysis\n\n\nIndraprastha Institute of Information Technology, Delhi\n\nXilinx Vivado\n\nPhysical Design\n\nC (Programming Language)\n\nPassed LinkedIn Skill Assessment\n\n1 endorsement\n\n\nEndorsed by Pulkita Gupta who is highly skilled at this",
+  "courses": "Advanced Embedded Logic Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nAnalog CMOS Circuit Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDigital VLSI Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nMemory Design and Test\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nObject Oriented Programming Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nResearch Methods\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nSolid State Devices\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nVLSI Design Flow\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi",
+  "other_info": null,
+  "projects": {
+    "raw_text": "Design of High Speed Standard Cell Library\n\nMay 2021 – Dec 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign and characterization of High speed flip-flops for high speed standard cell library at 65nm technology.\n\nImplementation of Polar Encoder algorithm on Zedboard using SDSoC\n\nFeb 2021 – May 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign of Polar Encoder on Xilinx SDSoC . Verifying the functionality for various data sizes. Performance analysis for various Hardware and software partitions\n\nOther contributors\n\nView all contributors\nProcess compensated Wordline Underdrive circuit\n\nFeb 2021 – May 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign and layout of Process Compensated wordline underdrive driver. The aim of this project was to underdrive the word line only at the PVT corner which is critical for SNM i.e. FS125. This scheme does\nnot underdrive the worldline in the PVTs which are critical for write margin and cell current. The layout was verified for DRC and LVS. Comparison of pre and post-layout simulation results was done.\nThe design was made using Cadence Virtuoso and simulations were performed using Mentor Graphics- Eldo\n\nOther contributors\n\nView all contributors\nRTL to GDS Flow\n\nJan 2020 – May 2021\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign of  High PSRR Folded Cascode Operational Amplifier for LDO Applications\n\nSep 2020 – Dec 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nHigh PSRR Op-amp designed for LDO application using Folded Cascode Topology with PMOS input differential pair. The design was made using Cadence Virtuoso. The simulation was done by Spectre Circuit Simulator\n\nOther contributors\n\nView all contributors\nDesign of OAI 222 Complex Gate\n\nSep 2020 – Dec 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign and layout of complex gate using domino logic. The layout was verified for DRC and LVS. Comparison of pre and post layout simulation results was done.\nThe design was made using Cadence Virtuoso and simulations were performed on Mentor Graphics- Eldo\n\nOther contributors\n\n\n\nView all contributors\nMulti-controlled Smart Wheelchair\n\nAug 2018 – Apr 2019\n\n\nAssociated with Kamla Nehru Institute of Technology, Sultanpur\n\nLow Altitude Weather satellite\n\nMar 2017 – Apr 2017\n\n\nAssociated with Kamla Nehru Institute of Technology, Sultanpur\n\nLow altitude Weather satellite is a local weather station which gives live weather details and forecast the upcoming weather.\n\nOther contributors",
+    "parsed_projects": [
+      {
+        "title": "Design of High Speed Standard Cell Library",
+        "description": "",
+        "duration": "May 2021 – Dec 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design and characterization of High speed flip-flops for high speed standard cell library at 65nm technology.",
+        "description": "Implementation of Polar Encoder algorithm on Zedboard using SDSoC",
+        "duration": "Feb 2021 – May 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design of Polar Encoder on Xilinx SDSoC . Verifying the functionality for various data sizes. Performance analysis for various Hardware and software partitions",
+        "description": "Other contributors View all contributors Process compensated Wordline Underdrive circuit",
+        "duration": "Feb 2021 – May 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design and layout of Process Compensated wordline underdrive driver. The aim of this project was to underdrive the word line only at the PVT corner which is critical for SNM i.e. FS125. This scheme does",
+        "description": "not underdrive the worldline in the PVTs which are critical for write margin and cell current. The layout was verified for DRC and LVS. Comparison of pre and post-layout simulation results was done. The design was made using Cadence Virtuoso and simulations were performed using Mentor Graphics- Eldo Other contributors View all contributors RTL to GDS Flow",
+        "duration": "Jan 2020 – May 2021",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design of  High PSRR Folded Cascode Operational Amplifier for LDO Applications",
+        "description": "",
+        "duration": "Sep 2020 – Dec 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "High PSRR Op-amp designed for LDO application using Folded Cascode Topology with PMOS input differential pair. The design was made using Cadence Virtuoso. The simulation was done by Spectre Circuit Simulator",
+        "description": "Other contributors View all contributors Design of OAI 222 Complex Gate",
+        "duration": "Sep 2020 – Dec 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design and layout of complex gate using domino logic. The layout was verified for DRC and LVS. Comparison of pre and post layout simulation results was done.",
+        "description": "The design was made using Cadence Virtuoso and simulations were performed on Mentor Graphics- Eldo Other contributors View all contributors Multi-controlled Smart Wheelchair",
+        "duration": "Aug 2018 – Apr 2019",
+        "organization": "Kamla Nehru Institute of Technology, Sultanpur"
+      },
+      {
+        "title": "Low Altitude Weather satellite",
+        "description": "",
+        "duration": "Mar 2017 – Apr 2017",
+        "organization": "Kamla Nehru Institute of Technology, Sultanpur"
+      },
+      {
+        "title": "Low altitude Weather satellite is a local weather station which gives live weather details and forecast the upcoming weather.",
+        "description": "Other contributors",
+        "duration": "",
+        "organization": ""
+      }
+    ]
+  }
+}

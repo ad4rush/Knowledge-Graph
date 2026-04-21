@@ -1,0 +1,65 @@
+{
+  "student_name": "Shubham Mishra",
+  "skills": "Mixed Signal\n\n5 endorsements\n\nMemory Design\n\n2 endorsements\n\nDigital Hardware Design\n\n2 endorsements\n\nC (Programming Language)\n\nVerilog\n\nDigital Circuit Design\n\n1 endorsement\n\nRF Circuit Design\n\nAnalog CMOS Circuit Design \n\n1 endorsement\n\nVLSI EDA\n\nSolid State Device\n\nDigital VLSI Design\n\nVLSI Design Flow\n\nAnalog Circuit Design\n\n1 endorsement\n\nCircuit Design\n\n1 endorsement\n\nSemiconductors\n\nDigital Circuits \n\nElectronics \n\nVery-Large-Scale Integration (VLSI)\n\nMicrosoft Excel \n\nMicrosoft PowerPoint\n\nArduino \n\nMicrosoft Word\n\nTCL\n\nLow-power Design\n\nDFT\n\nVirtuoso\n\nCadence\n\nADCs\n\nDAC\n\nBandgap References\n\nLDO\n\nAnalog Circuits \n\nCadence Virtuoso\n\nLogic Synthesis\n\nStatic Timing Analysis\n\nCAD Tools\n\nSRAM\n\nLow Voltage\n\nADC\n\nOpamp\n\nAnalog Filters\n\nCurrent Conveyor\n\nOscillator\n\nSense Amplifier\n\nImpedance Transformer\n\nComparators",
+  "courses": "Analog CMOS Circuit\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDigital Circuit\n\n\nAssociated with Noida Institute of Engineering & Technology\n\nDigital VLSI Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nElectromagnetic Theory\n\n\nAssociated with Noida Institute of Engineering & Technology\n\nMemory Design & Testing\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nMixed Signal Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nNetwork Theory\n\n\nAssociated with Noida Institute of Engineering & Technology\n\nRF Circuit Design\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nSolid State Devices\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nVLSI Design Flow\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi",
+  "other_info": "Test scores\nGATE(ECE)\n\nScore: 526 · Mar 2019\n\n\nAssociated with Noida Institute of Engineering & Technology\n\nGATE(ECE)\n\nScore: 395 · Mar 2018\n\n\nAssociated with Noida Institute of Engineering & Technology",
+  "projects": {
+    "raw_text": "Low Frequency Drift (with temperature) Fully On-chip Oscillator\n\nAug 2020 – Present\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign of fully on chip oscillator in 65nm technology which will operate at low power that has a low\nas possible drift in frequency with temperature.\n\nDesign of Current Starved Ring oscillator\n\nJun 2020 – Dec 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign of current starved ring oscillator in 65nm technology in which analysed the effect of input\nvoltage at the output frequency. Seen the effect of mismatch in term of noise and performance.\n\nDesign of Dual-band and Tri-band Impedance Transformer\n\nAug 2020 – Dec 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign and making the layout of Dual-band and Tri-band impedance transformer by using\nADS(Keysight) tool which will match the frequency dependent complex load to a resistive source\nimpedance at two and three arbitrary frequencies with the reflection coefficient of -21dB and -17dB\nrespectively.\n\nDesign and Comparative Study of Switched Capacitor Filters\n\nJan 2020 – Jun 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign and study of 1st and 2nd order of filters by using Op-Amp and Current Conveyor in 180nm\ntechnology and analysis of both Voltage Mode and Current Mode approaches.\n\nDesign and Implementation of RTL to GDS flow for a given digital circuit\n\nJan 2020 – Jun 2020\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesigning a digital circuit and performing steps involving RTL to GDS flow like logic synthesis,\nequivalence checking, STA, DFT and physical design (PnR) involving floorplanning, power planning,\nCTS, Place and Route by using various CAD tools and understanding different trade-offs that are\ninvolved.\n\nDesign and Study of Op-Amp and Current Conveyor Circuit\n\nJan 2020 – Jun 2020\n\nDesign of Op-Amp and Current Conveyor circuit in 180nm technology and study the difference in\nterm of Gain, Bandwidth, Power, Delay, signal handling.\n\nDesign of Single Ended Sense Amplifier for the ROM Array\n\nJan 2020 – Jun 2020\n\nDesign of Single Ended Sense Amplifier for the ROM array in 65 nm technology node for 10uA\nOn-current which is giving the best-read time of 1.97ns for the NOR cell at FF, 1.32V, -400C and\ndischarge current of 10.37uA at 1.08V, -400C.\n\nDesign and Analysis of AOI222 Static Logic\n\nJul 2019 – Dec 2019\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign of AOI222 logic circuit in 65 nm technology. Making the layout of this circuit and study of the\npre-layout and post-layout analysis in term of Power, Delay and Area.\n\nDesign of High-Speed Comparator circuit with high Precision\n\nJul 2019 – Dec 2019\n\n\nAssociated with Indraprastha Institute of Information Technology, Delhi\n\nDesign of 8-bit low power static Comparator in 180nm technology which giving the 1.5mv resolution\nwith output delay of 0.21ns.\n\nIOT based Landslide Detection System\n\nJun 2016 – Jul 2016\n\n\nAssociated with Defence Research and Development Organisation (DRDO)\n\nLearned about the Causes of the Landslides and making the prototype by using different sensors to\ndetect the landslides.",
+    "parsed_projects": [
+      {
+        "title": "Low Frequency Drift (with temperature) Fully On-chip Oscillator",
+        "description": "",
+        "duration": "Aug 2020 – Present",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design of fully on chip oscillator in 65nm technology which will operate at low power that has a low",
+        "description": "as possible drift in frequency with temperature. Design of Current Starved Ring oscillator",
+        "duration": "Jun 2020 – Dec 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design of current starved ring oscillator in 65nm technology in which analysed the effect of input",
+        "description": "voltage at the output frequency. Seen the effect of mismatch in term of noise and performance. Design of Dual-band and Tri-band Impedance Transformer",
+        "duration": "Aug 2020 – Dec 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design and making the layout of Dual-band and Tri-band impedance transformer by using",
+        "description": "ADS(Keysight) tool which will match the frequency dependent complex load to a resistive source impedance at two and three arbitrary frequencies with the reflection coefficient of -21dB and -17dB respectively. Design and Comparative Study of Switched Capacitor Filters",
+        "duration": "Jan 2020 – Jun 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design and study of 1st and 2nd order of filters by using Op-Amp and Current Conveyor in 180nm",
+        "description": "technology and analysis of both Voltage Mode and Current Mode approaches. Design and Implementation of RTL to GDS flow for a given digital circuit",
+        "duration": "Jan 2020 – Jun 2020",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Designing a digital circuit and performing steps involving RTL to GDS flow like logic synthesis,",
+        "description": "equivalence checking, STA, DFT and physical design (PnR) involving floorplanning, power planning, CTS, Place and Route by using various CAD tools and understanding different trade-offs that are involved. Design and Study of Op-Amp and Current Conveyor Circuit Design of Op-Amp and Current Conveyor circuit in 180nm technology and study the difference in term of Gain, Bandwidth, Power, Delay, signal handling. Design of Single Ended Sense Amplifier for the ROM Array Design of Single Ended Sense Amplifier for the ROM array in 65 nm technology node for 10uA On-current which is giving the best-read time of 1.97ns for the NOR cell at FF, 1.32V, -400C and discharge current of 10.37uA at 1.08V, -400C. Design and Analysis of AOI222 Static Logic",
+        "duration": "Jul 2019 – Dec 2019",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design of AOI222 logic circuit in 65 nm technology. Making the layout of this circuit and study of the",
+        "description": "pre-layout and post-layout analysis in term of Power, Delay and Area. Design of High-Speed Comparator circuit with high Precision",
+        "duration": "Jul 2019 – Dec 2019",
+        "organization": "Indraprastha Institute of Information Technology, Delhi"
+      },
+      {
+        "title": "Design of 8-bit low power static Comparator in 180nm technology which giving the 1.5mv resolution",
+        "description": "with output delay of 0.21ns. IOT based Landslide Detection System",
+        "duration": "Jun 2016 – Jul 2016",
+        "organization": "Defence Research and Development Organisation (DRDO)"
+      },
+      {
+        "title": "Learned about the Causes of the Landslides and making the prototype by using different sensors to",
+        "description": "detect the landslides.",
+        "duration": "",
+        "organization": ""
+      }
+    ]
+  }
+}
