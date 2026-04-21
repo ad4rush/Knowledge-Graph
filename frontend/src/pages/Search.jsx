@@ -2,6 +2,39 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { searchStudents, photoUrl } from '../api'
 
+/**
+ * Lightweight markdown → HTML converter for AI analysis text.
+ * Handles: **bold**, *italic*, headers (#-###), lists, and line breaks.
+ */
+function formatMarkdown(text) {
+  if (!text) return ''
+  let html = text
+    // Escape HTML entities
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+  // Headers
+  html = html.replace(/^### (.+)$/gm, '<h4>$1</h4>')
+  html = html.replace(/^## (.+)$/gm, '<h3>$1</h3>')
+  html = html.replace(/^# (.+)$/gm, '<h2>$1</h2>')
+  // Bold and italic
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>')
+  // Horizontal rules
+  html = html.replace(/^---+$/gm, '<hr/>')
+  // Numbered lists
+  html = html.replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>')
+  // Bullet lists
+  html = html.replace(/^[-•]\s+(.+)$/gm, '<li>$1</li>')
+  // Wrap consecutive <li> in <ul>
+  html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>')
+  // Line breaks (double newline → paragraph break, single → <br>)
+  html = html.replace(/\n\n/g, '</p><p>')
+  html = html.replace(/\n/g, '<br/>')
+  return `<p>${html}</p>`
+}
+
 export default function Search() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState(null)
@@ -15,7 +48,7 @@ export default function Search() {
     setLoading(true)
     setError(null)
     try {
-      const data = await searchStudents(query, 15, false)
+      const data = await searchStudents(query, 5, false)
       setResults(data)
     } catch (err) {
       setError(err.message)
@@ -59,7 +92,7 @@ export default function Search() {
         <div className="search-results-layout">
           <div className="search-results-list">
             <h3 style={{ color: 'var(--text-bright)', marginBottom: 8 }}>
-              Top {results.candidates.length} Matches
+              {results.candidates.length} Matches
             </h3>
             {results.candidates.map((c, i) => (
               <div key={i} className="search-result-card" onClick={() => navigate(`/student/${encodeURIComponent(c.name)}`)}>
@@ -86,7 +119,7 @@ export default function Search() {
           {results.ai_analysis && (
             <div className="ai-panel">
               <div className="ai-panel-title">🤖 AI Re-Ranking & Reasoning</div>
-              <div className="ai-panel-content">{results.ai_analysis}</div>
+              <div className="ai-panel-content" dangerouslySetInnerHTML={{ __html: formatMarkdown(results.ai_analysis) }} />
             </div>
           )}
         </div>

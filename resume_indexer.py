@@ -329,21 +329,24 @@ def distill(filepath: str) -> tuple:
 # ─── MAIN ─────────────────────────────────────────────────────────────────────
 
 def test_first_key():
-    """Quick smoke-test: try embedding a short string with the first key."""
-    print("Testing first API key...")
-    try:
-        genai.configure(api_key=API_KEYS[0])
-        result = genai.embed_content(
-            model=EMBED_MODEL,
-            content="test embedding",
-            task_type="RETRIEVAL_DOCUMENT",
-        )
-        dim = len(result["embedding"])
-        print(f"  OK — embedding dim = {dim}")
-        return True
-    except Exception as e:
-        print(f"  FAIL — {e}")
-        return False
+    """Smoke-test: try embedding a short string with any working key."""
+    print("Testing API keys...")
+    for idx, key in enumerate(API_KEYS):
+        try:
+            genai.configure(api_key=key)
+            result = genai.embed_content(
+                model=EMBED_MODEL,
+                content="test embedding",
+                task_type="RETRIEVAL_DOCUMENT",
+            )
+            dim = len(result["embedding"])
+            print(f"  OK — key #{idx+1} works, embedding dim = {dim}")
+            return True
+        except Exception as e:
+            if idx < 3:
+                print(f"  Key #{idx+1} failed: {str(e)[:80]}")
+    print("  FAIL — no working keys found")
+    return False
 
 
 def main():
@@ -354,6 +357,7 @@ def main():
     rotator = KeyRotator(API_KEYS)
 
     # Collect all JSON files from both folders
+    # Output/ files come first so they take priority during dedup
     files = (
         glob.glob(os.path.join(OUTPUT_DIR,  "*.json")) +
         glob.glob(os.path.join(MANUAL_DIR,  "*.json"))
@@ -376,7 +380,12 @@ def main():
     else:
         index = faiss.IndexFlatIP(EMBED_DIM)   # Inner-product (cosine after norm)
 
+    # Track names already indexed to prevent duplicates
+    # (output/ files listed first, so they win over manual_text/ dupes)
+    indexed_names = {m["name"] for m in metadata}
+
     new_count = 0
+    skipped_dupes = 0
     for filepath in files:
         rel = os.path.relpath(filepath, BASE_DIR)
         if rel in already_done:
@@ -387,6 +396,13 @@ def main():
         except Exception as e:
             print(f"  [SKIP] {rel} — distill error: {e}")
             continue
+
+        # Deduplicate: skip if this student name is already indexed
+        if name in indexed_names:
+            print(f"  [DUPE] {name} — already indexed, skipping {rel}")
+            skipped_dupes += 1
+            continue
+        indexed_names.add(name)
 
         if len(text.strip()) < 30:
             print(f"  [WARN] {name} — almost empty profile, flagging.")
@@ -429,6 +445,8 @@ def main():
         json.dump(metadata, f, ensure_ascii=False, indent=2)
 
     print(f"\nDone. Indexed {new_count} new + {len(already_done)} existing = {index.ntotal} total candidates.")
+    if skipped_dupes:
+        print(f"   Skipped {skipped_dupes} duplicate entries (same student in both output/ and manual_text/).")
     print(f"   FAISS index -> {INDEX_FILE}")
     print(f"   Metadata    -> {META_FILE}")
 

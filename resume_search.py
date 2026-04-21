@@ -216,7 +216,7 @@ Format the output cleanly. Do not hallucinate skills they don't have. If a candi
 def main():
     parser = argparse.ArgumentParser(description="Semantic Search for Resumes")
     parser.add_argument("query", type=str, help="Natural language search query")
-    parser.add_argument("--top", type=int, default=15, help="Number of candidates to fetch from FAISS before re-ranking")
+    parser.add_argument("--top", type=int, default=5, help="Number of candidates to fetch from FAISS before re-ranking")
     parser.add_argument("--skip-llm", action="store_true", help="Skip LLM re-ranking, just show raw FAISS results")
     args = parser.parse_args()
 
@@ -238,17 +238,24 @@ def main():
         return
 
     print("Searching vector space...")
-    # k must not exceed total candidates
-    k = min(args.top, len(metadata))
+    # Fetch extra from FAISS to account for deduplication
+    k = min(args.top * 3, len(metadata))
     distances, indices = index.search(q_vec, k)
 
-    # Fetch top candidates
+    # Fetch top candidates, deduplicating by name
     top_candidates = []
+    seen_names = set()
     for i, dist in zip(indices[0], distances[0]):
         if i == -1: continue
-        c = metadata[i]
+        c = metadata[i].copy()
+        name = c.get("name", "")
+        if name in seen_names:
+            continue
+        seen_names.add(name)
         c["score"] = float(dist)
         top_candidates.append(c)
+        if len(top_candidates) >= args.top:
+            break
 
     if args.skip_llm:
         print(f"\n=== Top {len(top_candidates)} Raw Vector Matches ===\n")

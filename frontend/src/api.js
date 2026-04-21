@@ -18,7 +18,7 @@ export async function fetchStats() {
   return res.json()
 }
 
-export async function searchStudents(query, top = 15, skipLlm = false) {
+export async function searchStudents(query, top = 5, skipLlm = false) {
   const res = await fetch(`${BASE}/api/search`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

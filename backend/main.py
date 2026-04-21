@@ -108,7 +108,7 @@ app.add_middleware(
 # ─── MODELS ───────────────────────────────────────────────────────────────────
 class SearchRequest(BaseModel):
     query: str
-    top: int = 15
+    top: int = 5
     skip_llm: bool = False
 
 class SearchResult(BaseModel):
@@ -372,18 +372,24 @@ def search_students(req: SearchRequest):
     vec /= np.linalg.norm(vec) + 1e-10
     vec = vec.reshape(1, -1)
     
-    # Search
-    k = min(req.top, len(metadata))
+    # Search — fetch extra to account for deduplication
+    k = min(req.top * 3, len(metadata))
     distances, indices = index.search(vec, k)
     
     candidates = []
+    seen_names = set()
     for i, dist in zip(indices[0], distances[0]):
         if i == -1:
             continue
         m = metadata[i]
-        photo = get_photo_filename(m.get("name", ""))
+        name = m.get("name", "")
+        # Deduplicate by name (metadata may have dupes from output/ + manual_text/)
+        if name in seen_names:
+            continue
+        seen_names.add(name)
+        photo = get_photo_filename(name)
         candidates.append({
-            "name": m.get("name"),
+            "name": name,
             "score": float(dist),
             "primary_domain": m.get("primary_domain"),
             "branch": m.get("branch"),
@@ -392,6 +398,8 @@ def search_students(req: SearchRequest):
             "distilled": m.get("distilled", ""),
             "photo_url": f"/api/photos/{photo}" if photo else None,
         })
+        if len(candidates) >= req.top:
+            break
     
     ai_analysis = None
     if not req.skip_llm and candidates:
