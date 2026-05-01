@@ -5,8 +5,12 @@ services:
     buildCommand: pip install -r backend/requirements.txt
     startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
     envVars:
-      - key: GEMINI_API_KEYS
+      - key: AWS_ACCESS_KEY_ID
         sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_DEFAULT_REGION
+        value: ap-southeast-2
     disk:
       name: resume-data
       mountPath: /opt/render/project/src

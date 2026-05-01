@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const BASE = import.meta.env.VITE_API_URL || 'https://vicas-hub.duckdns.org/resume-api'
 
 export async function fetchStudents() {
   const res = await fetch(`${BASE}/api/students`)

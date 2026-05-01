@@ -3,136 +3,27 @@
 Resume Indexer — Build FAISS vector index from parsed resume JSONs.
 Handles both output/ (rich flat schema) and manual_text/ (LinkedIn schema).
 Run once. Saves resume_index.faiss + resume_metadata.json.
+Uses AWS Bedrock (Amazon Titan V2) for embeddings.
 """
 
 import os, json, glob, re, time
 import numpy as np
 import faiss
-import google.generativeai as genai
+import boto3
+from dotenv import load_dotenv
 
-# ─── ALL API KEYS ─────────────────────────────────────────────────────────────
-API_KEYS = [
-    "AIzaSyDZBK7iFvO7ityBC2EztJnHcy8aa3pl_E8",
-    "AIzaSyDc47g2n_heYk7HnWfjNRjDlLSAho0Mcyk",
-    "AIzaSyBsyhooVAm1mlcQzZ3GnAvTCQwc8Cs_0xE",
-    "AIzaSyCM-WolRBhaNiP3ZlBGpgWKcvh-LOATPvo",
-    "AIzaSyBYbfo11lnYauKa4Y4L8Kv20GuidcqqEKw",
-    "AIzaSyDKMfQAsWE0uhJ-_IBM772kT1JCv-Lzero",
-    "AIzaSyDli0LJV4B_Sz9oGWD2rvRv3atdHlgg7is",
-    "AIzaSyCO70oeDMlzVHPvJ8HeEHmdgTEyPy4v90c",
-    "AIzaSyAAOVgpxHxM6gjyl0DsNfYHpZ5ZIMnBRxc",
-    "AIzaSyD0r5ADqhW7Wug30gsJJE4TgM-S2LbTm6c",
-    "AIzaSyArYaONyWiXmCy8E5Req8eScJJJFitbH9k",
-    "AIzaSyBCRcbHLoyRKcn2JCqW3MFYUmrUVpOv1aU",
-    "AIzaSyD75TSleFsM4rxAGG3dzYUKasQdfXgxNhE",
-    "AIzaSyC31pWl7Mwhuo3szJRCahxcyup5pXZa-Sw",
-    "AIzaSyDLGsUKiIMUJAVBrOj92J4zfbuoY5F_rgA",
-    "AIzaSyDwF3i3dyK9AyxrqTXnJrwzOD0K29lCHTU",
-    "AIzaSyBx3eE3T3zJl_AeRMyUUjcDlWwAkrn8RCw",
-    "AIzaSyDm9af7Rg7Jze4e5sJqVwJyguwdh5sC60A",
-    "AIzaSyCWGB1vX99oX47nGbHytLK8xAuK2ETA3y0",
-    "AIzaSyC-EI4C9n49yg1DSqBESaOSX-3sMoXJLtI",
-    "AIzaSyB6Tc5zXzGWy6ZjcXaWubls9NIWHNAh_go",
-    "AIzaSyBJm0C0nsBgFjQWO1ZMtpECsbCkHAJc7iI",
-    "AIzaSyC1U_4M6L5IbalydU1Erdu_FJ6p0zSlH9M",
-    "AIzaSyDm_Bp6Q8P9l74yjxcVPPvWE7bSejXJIrs",
-    "AIzaSyC1bzNRZhtaunThle_R0n23O6nsD6n_q9c",
-    "AIzaSyBKpUBTZsqS1aBGYC8hwtsyL4RcmsWYr_w",
-    "AIzaSyDVAyu0eqOo_3V8YhCOuwNE9Y3SafmiQLA",
-    "AIzaSyAk0Skk-WYqiiHJPa9G-sC_Xp21TQqrTaw",
-    "AIzaSyBzwWRKiWrgReELTFxRZRWjFOKUg5zensg",
-    "AIzaSyCGc44Ix6sr7D4tqAUO9409-ODfyFCgvmU",
-    "AIzaSyCSsHlyi9i7QKdHCE-IOVkp8x02Qjme244",
-    "AIzaSyBkDGNEQhoKLLtHoHkwy5I7HntlI6YdVNc",
-    "AIzaSyAlviYqdi9Zc6qdfAwYzz5aKpsN8kxZ__Y",
-    "AIzaSyDUgSx7V-wHs-z4v7v5bGE12JtvhhIdssI",
-    "AIzaSyB2h_-pzuQLCgcPIf3OuwTgXvxjIzYYwgQ",
-    "AIzaSyDUrY_FCakSH2TUwUtUw67UvZwteIJr_F4",
-    "AIzaSyAKKzkwxt_kCVGGI37UgX7tlnWuqxGqHRw",
-    "AIzaSyCvffZz2HwOZibTraoVQMk5ZbCK3wYGMhs",
-    "AIzaSyDSKzp8QHT9hIicd1TLs5YEcRXOW9u02t8",
-    "AIzaSyC_fDFD7wsBnDzsjXjb13t7pBzoAtcI2cE",
-    "AIzaSyCKdy6YgLNjnibkqImGl5D1Cy_s2-YPQdo",
-    "AIzaSyCfSUbxjszcNBpczzEuQD-ontkYZSqNl0Y",
-    "AIzaSyD4AmNaUI666Q3hB9nFT7SGOGnWCr00vQ4",
-    "AIzaSyCk1-WxXVHJzqhWCks3CDEy7FHx-d5cu3k",
-    "AIzaSyCYPo5XOHVf0oO-OR1fI2V4N_fB30sA_OE",
-    "AIzaSyBwu0Jxb1onbw6GjOZlT4KLvfL8t1-NlWw",
-    "AIzaSyBZusDlJq4LpRZN0D-zPyoKpTZM-OhS9co",
-    "AIzaSyB1IosSwR6OFe_ftRWxWAJhJPz8pVLzj5U",
-    "AIzaSyCc_kIEdr6QZCrkQMcYfP7mf7WqB5CzW1A",
-    "AIzaSyBihTHh-pTYj6zdxZqmIKcJGF8i_pCgOCc",
-    "AIzaSyDmNmfV4XVrs4wVPIojJWPL7RsuCLxMK74",
-    "AIzaSyCdHHlqXqEhr40wjPE34tA83LoVqYxVLp0",
-    "AIzaSyBoPEsjAatQ95g3O-9siAJvy06e0lDp1Go",
-    "AIzaSyBT4SJ8uh6LKomQthmtQWb6LVOlD9iTLM8",
-    "AIzaSyDrXYuVD_DxKm-FPc4M4GQdI9cfwLw66Tc",
-    "AIzaSyCZPyRyvAW-QE0o65wtn1kzfs_c_vadUZg",
-    "AIzaSyA595BKKhh8aVdB0PqdxJIRvIGYH_qT6_g",
-    "AIzaSyAWs7cNBfZpyTRKYGaAo8oFFfm7FK9dVrs",
-    "AIzaSyB_LYBl9K4Y1wEfpav3IZZlyWCPnJhDhEw",
-    "AIzaSyD6Ua33kNr6QYMzhzbD4dpEnbF7jhSDPEo",
-    "AIzaSyBDhsr3PAyz49-ewB9c7aPjJq7rt5s4gDA",
-    "AIzaSyAkMR-KEbs1HeSwJSKHTItOIGZ6xGUIHPI",
-    "AIzaSyCOadKzOyOzLgf2M7oB02MMPd4CztRNb3E",
-    "AIzaSyDfOO4QRCD4IU0zluS4-JhOjmYyxiglN5s",
-    "AIzaSyC-7gU4y1vLq1B_Hq-CmOtkkRLRJzliyCo",
-    "AIzaSyBuyzi2018BHBcSU0CawEvunbFtVTCIPn8",
-    "AIzaSyAxeB99uE17WH8HLs1IWcd4cAoUQMOJa7Y",
-    "AIzaSyDuOw57xVilNaAWu7JomCAuYWcYZ6JrXeE",
-    "AIzaSyAyy2PeXtiLJIWZtBpoLaWCeIaCZxW8amA",
-    "AIzaSyCWtvuGZoc-i6GWmaUu1XzAUamrstFr3Ow",
-    "AIzaSyCjpWrdgRrTUEVNsz54Suht3itrCdBNWUA",
-    "AIzaSyDm1fxXrtTHrP0vtHHgtM9aoTrraqdYt9M",
-    "AIzaSyBHY7uO42_ZHBx12Ye4gcwjE4rene3FgDs",
-    "AIzaSyBqaA-QRnnr-vNs2JuSxZ-r2GWT58ri0ZY",
-    "AIzaSyAr9n_xj5wCfJiGFwuGvVBV-HEwcg4vbM8",
-    "AIzaSyBfPG5eQHy6hy3A3TpHABCpnDCelCmZdNg",
-    "AIzaSyASaCf7OQ204eT5pMjYbsxDdmdJrtUY6pE",
-    "AIzaSyB3dDSX8yyB8fsZqTBSexBBEwK-9h7p94s",
-    "AIzaSyC4sHHHpkrorgTgnE-dkAZ8gLgdIioWuOs",
-    "AIzaSyBzGNZYp4wt6A8rtZjoOl78kERdQ2eo7v0",
-    "AIzaSyDm2zdXeVJ6HpFnnmUj4mJXrmaLxM6g9Dw",
-    "AIzaSyDipaUcb5CSEuk0sflngScI0dYNPZYCxiI",
-    "AIzaSyApSgtR0bOI24AuVbfVYPCyHQRImQshFEI",
-    "AIzaSyDP4Pj6ER1IUKH9XRRsO8_IJnKzBHvWIm8",
-    "AIzaSyD5Im_B1zSbS59AObB1LpQX-NB_7EF3xpI",
-    "AIzaSyADX3-IpSKgw30ajoyAQqYqvqpmGbpk8mM",
-    "AIzaSyADxgL9jJ4EueVABAEHtOlkcnij4DBq-6M",
-    "AIzaSyCHSKSLK2rE8hHVwpZj03aeZvOjguCI4mE",
-    "AIzaSyBaWtw2JH9wE18WMfetnnNJdjXNqMoZ1lU",
-    "AIzaSyA3bo3kMSE8n9FlcGtPEg-wMjOvTM8c7fs",
-    "AIzaSyCnGY6ZY2uJnj2yZG3ZIsvCf9oFZxWja6E",
-    "AIzaSyBLXbt0Frjykmv3nyjqfqOiq_F8u3nfgHw",
-    "AIzaSyDVUF5oEZuFqISgBSdBdkSdi5-cABkx8pE",
-    "AIzaSyB3Z9SeA_Twwhc5prrb15UeZGBy55nvTvM",
-    "AIzaSyBTEgbdTHmPBshAw4rKvdVqOXH1uq6oQTc",
-    "AIzaSyAciT9Drq27IU_xkMy4EpBOtgwznMJkCCI",
-    "AIzaSyCCid067gh28fdPBL9m-jfFlNyTPcHDlcM",
-    "AIzaSyBRaYpTMvhzOad76RuXk9MxAsYMSwPqC_E",
-    "AIzaSyAOg10mM8OGmbYsxc9yIovyNwu80wWnxkY",
-    "AIzaSyAudmWIgwQF2Z9wJzH_lPmjN-TXCA-DjF0",
-    "AIzaSyC_AhGM7cANUZJJloRDLgbEkLUuRjwr3Jc",
-    "AIzaSyCjgK3Kvx-bYPyr_msk0IJ_H46Ntg8hQj0",
-    "AIzaSyCGOGxTPkcZFnjnkmvGBiPAQVyZi4tHH6s",
-    "AIzaSyAUTUP0Folh2UyIg1WGVmRGgVthDuCQUf0",
-    "AIzaSyCj0ff5GuS2ZtsQM3LCRLMegY3urKt-tMk",
-    "AIzaSyB12iejv4Q77WVNaYQgAs_6eLrrdzx-WtY",
-    "AIzaSyAbV_uO-jE5R4834nreYOztJ6gzScxPPxY",
-    "AIzaSyBbhD8js_ebdqgcYLHJc4ZslanGynZhLP0",
-    "AIzaSyB6cdGw2voCBmi_CLfQhy5F58WdJY4cGRM",
-    "AIzaSyCE125x6AqwM6wg9xwLkn9dkX0AYqrOg-w",
-    "AIzaSyDrsUC9gpi9hrYyZBo_Z7OfEPWnrjwtojQ",
-    "AIzaSyCiZRIKBF1QehjqL52hRwszmHz0rlD4Gbo",
-    "AIzaSyAuLQQ5kdNGaZKmd9CPlO0CT4FIitFF4xY",
-    "AIzaSyAq_YLL7-bJrr2YRRDgbEaX66d2TchXASc",
-    "AIzaSyAQCv4yZiJXFKIPLss8V4_cERLKVmvwkik",
-    "AIzaSyD-DO65XCikcFT1xOZ3AFipZYnRlmUNb8o",
-    "AIzaSyCMRnTdMPEmqsJ7OuM3_BeqKf_B3SYmSU8",
-    "AIzaSyBV2q9F-XZKc45yhFa9Bg9L4Rcv_9Wb2yY",
-    "AIzaSyCpZ5ICedHDw4xZ6rLOiEvSmTDlXuwFThU",
-    "AIzaSyDb6thttVOPq_9NL7ERRM3f2jrUT3hIwG0",
-]
+load_dotenv()
+
+# ─── AWS BEDROCK CONFIG ──────────────────────────────────────────────────────
+AWS_REGION     = os.getenv("AWS_DEFAULT_REGION", "ap-southeast-2")
+EMBED_MODEL_ID = "amazon.titan-embed-text-v2:0"
+EMBED_DIM      = 1024
+
+# Initialize Bedrock client
+bedrock_runtime = boto3.client(
+    service_name="bedrock-runtime",
+    region_name=AWS_REGION,
+)
 
 # ─── CONFIG ───────────────────────────────────────────────────────────────────
 BASE_DIR    = os.path.dirname(os.path.abspath(__file__))
@@ -140,8 +31,6 @@ OUTPUT_DIR  = os.path.join(BASE_DIR, "output")
 MANUAL_DIR  = os.path.join(BASE_DIR, "manual_text")
 INDEX_FILE  = os.path.join(BASE_DIR, "resume_index.faiss")
 META_FILE   = os.path.join(BASE_DIR, "resume_metadata.json")
-EMBED_MODEL = "models/gemini-embedding-001"
-EMBED_DIM   = 3072
 
 SKILL_CATS = [
     "webdev","frontend","backend","mobile_dev","app_dev","cloud","devops",
@@ -154,39 +43,40 @@ SKILL_CATS = [
     "digital_twins_simulation_tools",
 ]
 
-# ─── KEY ROTATOR ──────────────────────────────────────────────────────────────
+# ─── EMBEDDING HELPER ────────────────────────────────────────────────────────
 class KeyRotator:
-    def __init__(self, keys):
-        self.keys = keys
-        self.idx  = 0
+    """Bedrock embedding wrapper with retry logic."""
+    def __init__(self):
+        self.client = bedrock_runtime
 
-    def embed(self, text: str, retries: int = None) -> list:
-        """Rotate keys automatically on 429 / quota errors. Shows real errors."""
-        max_tries = retries if retries is not None else len(self.keys)
-        tried = 0
+    def embed(self, text: str, retries: int = 3) -> list:
+        """Generate embedding using Amazon Titan V2 with retries."""
         last_error = None
-        while tried < max_tries:
-            key = self.keys[self.idx % len(self.keys)]
-            self.idx += 1
-            tried    += 1
+        for attempt in range(retries):
             try:
-                genai.configure(api_key=key)
-                result = genai.embed_content(
-                    model=EMBED_MODEL,
-                    content=text,
-                    task_type="RETRIEVAL_DOCUMENT",
+                payload = {
+                    "inputText": text[:8000],
+                    "dimensions": EMBED_DIM,
+                    "normalize": True,
+                }
+                response = self.client.invoke_model(
+                    body=json.dumps(payload),
+                    modelId=EMBED_MODEL_ID,
+                    accept="application/json",
+                    contentType="application/json",
                 )
+                result = json.loads(response["body"].read())
                 return result["embedding"]
             except Exception as e:
                 last_error = e
                 err = str(e).lower()
-                if tried <= 3:  # show first few errors so we know what's wrong
-                    print(f"    [key {tried}] Error: {e}")
-                if "429" in err or "quota" in err or "rate" in err or "exhausted" in err:
-                    continue   # rate limit -> try next key immediately
+                if attempt < 2:
+                    print(f"    [Attempt {attempt+1}] Error: {e}")
+                if "throttl" in err or "rate" in err:
+                    time.sleep(2 * (attempt + 1))
                 else:
-                    time.sleep(0.5)  # other error -> tiny wait, try next key
-        raise RuntimeError(f"All {max_tries} key attempts failed. Last error: {last_error}")
+                    time.sleep(0.5)
+        raise RuntimeError(f"Embedding failed after {retries} attempts. Last error: {last_error}")
 
 
 # ─── DISTILLERS ───────────────────────────────────────────────────────────────
@@ -328,33 +218,36 @@ def distill(filepath: str) -> tuple:
 
 # ─── MAIN ─────────────────────────────────────────────────────────────────────
 
-def test_first_key():
-    """Smoke-test: try embedding a short string with any working key."""
-    print("Testing API keys...")
-    for idx, key in enumerate(API_KEYS):
-        try:
-            genai.configure(api_key=key)
-            result = genai.embed_content(
-                model=EMBED_MODEL,
-                content="test embedding",
-                task_type="RETRIEVAL_DOCUMENT",
-            )
-            dim = len(result["embedding"])
-            print(f"  OK — key #{idx+1} works, embedding dim = {dim}")
-            return True
-        except Exception as e:
-            if idx < 3:
-                print(f"  Key #{idx+1} failed: {str(e)[:80]}")
-    print("  FAIL — no working keys found")
-    return False
+def test_bedrock_connection():
+    """Smoke-test: try embedding a short string via Bedrock."""
+    print("Testing AWS Bedrock connection...")
+    try:
+        payload = {
+            "inputText": "test embedding",
+            "dimensions": EMBED_DIM,
+            "normalize": True,
+        }
+        response = bedrock_runtime.invoke_model(
+            body=json.dumps(payload),
+            modelId=EMBED_MODEL_ID,
+            accept="application/json",
+            contentType="application/json",
+        )
+        result = json.loads(response["body"].read())
+        dim = len(result["embedding"])
+        print(f"  OK — Bedrock Titan V2 works, embedding dim = {dim}")
+        return True
+    except Exception as e:
+        print(f"  FAIL — Bedrock error: {e}")
+        return False
 
 
 def main():
-    if not test_first_key():
-        print("Aborting — fix API key issue first.")
+    if not test_bedrock_connection():
+        print("Aborting — fix AWS credentials or Bedrock access first.")
         return
 
-    rotator = KeyRotator(API_KEYS)
+    rotator = KeyRotator()
 
     # Collect all JSON files from both folders
     # Output/ files come first so they take priority during dedup

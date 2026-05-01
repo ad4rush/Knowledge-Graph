@@ -10,5 +10,9 @@ node_modules/
 # PDFs uploaded on server
 linkedin_pdfs/*.pdf
 
+# SSH keys
+*.pem
+device.pem
+
 # Keep frontend dist for deployment
 # !frontend/dist/

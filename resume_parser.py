@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
 """
 Resume Parser - 5 API Call Pipeline
-Extracts structured data from college resumes using Gemini API
+Extracts structured data from college resumes using AWS Bedrock (Claude 3.5 Haiku)
 
 Usage:
   python resume_parser.py --input_dir /path/to/resumes --output_dir /path/to/output
 
 Environment Variables:
-  GEMINI_API_KEYS - comma-separated API keys (up to 5)
-  GEMINI_API_KEY - single API key (fallback)
+  AWS_ACCESS_KEY_ID - AWS access key
+  AWS_SECRET_ACCESS_KEY - AWS secret key
+  AWS_DEFAULT_REGION - AWS region (default: ap-southeast-2)
 
 Dependencies:
-  pip install google-generativeai pdfplumber tqdm python-dotenv
+  pip install boto3 pdfplumber tqdm python-dotenv
 """
 
 import os
@@ -31,11 +32,10 @@ except ImportError:
     print("Missing dependency 'pdfplumber'. Install with: pip install pdfplumber", file=sys.stderr)
     raise
 
-try:
-    import google.generativeai as genai
-except ImportError:
-    print("Missing dependency 'google-generativeai'. Install with: pip install google-generativeai", file=sys.stderr)
-    raise
+import boto3
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from tqdm import tqdm
 
@@ -73,203 +73,74 @@ MAX_RESEARCH_PAPERS = 6
 # Paths for auto-indexing
 INDEX_FILE  = "resume_index.faiss"
 META_FILE   = "resume_metadata.json"
-EMBED_MODEL = "models/gemini-embedding-001"
-EMBED_DIM   = 3072
+EMBED_MODEL_ID = "amazon.titan-embed-text-v2:0"
+EMBED_DIM      = 1024
+
+# Bedrock model IDs (APAC cross-region inference profiles — confirmed ACTIVE)
+HAIKU_MODEL_ID = "apac.anthropic.claude-3-haiku-20240307-v1:0"
+AWS_REGION     = os.getenv("AWS_DEFAULT_REGION", "ap-southeast-2")
+
 
 # Utility Functions
-def get_api_keys() -> List[str]:
-    """Get API keys from environment variables"""
-    keys_env = os.getenv("GEMINI_API_KEYS", "").strip()
-    single = os.getenv("GEMINI_API_KEY", "").strip()
-    
-    keys = [
-        "AIzaSyDZBK7iFvO7ityBC2EztJnHcy8aa3pl_E8",
-        "AIzaSyDc47g2n_heYk7HnWfjNRjDlLSAho0Mcyk",
-        "AIzaSyBsyhooVAm1mlcQzZ3GnAvTCQwc8Cs_0xE",
-        "AIzaSyCM-WolRBhaNiP3ZlBGpgWKcvh-LOATPvo",
-        "AIzaSyBYbfo11lnYauKa4Y4L8Kv20GuidcqqEKw",
-        "AIzaSyDKMfQAsWE0uhJ-_IBM772kT1JCv-Lzero",
-        "AIzaSyDli0LJV4B_Sz9oGWD2rvRv3atdHlgg7is",
-        "AIzaSyCO70oeDMlzVHPvJ8HeEHmdgTEyPy4v90c",
-        "AIzaSyAAOVgpxHxM6gjyl0DsNfYHpZ5ZIMnBRxc",
-        "AIzaSyD0r5ADqhW7Wug30gsJJE4TgM-S2LbTm6c",
-        "AIzaSyArYaONyWiXmCy8E5Req8eScJJJFitbH9k",
-        "AIzaSyBCRcbHLoyRKcn2JCqW3MFYUmrUVpOv1aU",
-        "AIzaSyD75TSleFsM4rxAGG3dzYUKasQdfXgxNhE",
-        "AIzaSyC31pWl7Mwhuo3szJRCahxcyup5pXZa-Sw",
-        "AIzaSyDLGsUKiIMUJAVBrOj92J4zfbuoY5F_rgA",
-        "AIzaSyDwF3i3dyK9AyxrqTXnJrwzOD0K29lCHTU",
-        "AIzaSyBx3eE3T3zJl_AeRMyUUjcDlWwAkrn8RCw",
-        "AIzaSyDm9af7Rg7Jze4e5sJqVwJyguwdh5sC60A",
-        "AIzaSyCWGB1vX99oX47nGbHytLK8xAuK2ETA3y0",
-        "AIzaSyC-EI4C9n49yg1DSqBESaOSX-3sMoXJLtI",
-        "AIzaSyB6Tc5zXzGWy6ZjcXaWubls9NIWHNAh_go",
-        "AIzaSyBJm0C0nsBgFjQWO1ZMtpECsbCkHAJc7iI",
-        "AIzaSyC1U_4M6L5IbalydU1Erdu_FJ6p0zSlH9M",
-        "AIzaSyDm_Bp6Q8P9l74yjxcVPPvWE7bSejXJIrs",
-        "AIzaSyC1bzNRZhtaunThle_R0n23O6nsD6n_q9c",
-        "AIzaSyBKpUBTZsqS1aBGYC8hwtsyL4RcmsWYr_w",
-        "AIzaSyDVAyu0eqOo_3V8YhCOuwNE9Y3SafmiQLA",
-        "AIzaSyAk0Skk-WYqiiHJPa9G-sC_Xp21TQqrTaw",
-        "AIzaSyBzwWRKiWrgReELTFxRZRWjFOKUg5zensg",
-        "AIzaSyCGc44Ix6sr7D4tqAUO9409-ODfyFCgvmU",
-        "AIzaSyCSsHlyi9i7QKdHCE-IOVkp8x02Qjme244",
-        "AIzaSyBkDGNEQhoKLLtHoHkwy5I7HntlI6YdVNc",
-        "AIzaSyAlviYqdi9Zc6qdfAwYzz5aKpsN8kxZ__Y",
-        "AIzaSyB2h_-pzuQLCgcPIf3OuwTgXvxjIzYYwgQ",
-        "AIzaSyDUrY_FCakSH2TUwUtUw67UvZwteIJr_F4",
-        "AIzaSyAKKzkwxt_kCVGGI37UgX7tlnWuqxGqHRw",
-        "AIzaSyCvffZz2HwOZibTraoVQMk5ZbCK3wYGMhs",
-        "AIzaSyDSKzp8QHT9hIicd1TLs5YEcRXOW9u02t8",
-        "AIzaSyC_fDFD7wsBnDzsjXjb13t7pBzoAtcI2cE",
-        "AIzaSyCKdy6YgLNjnibkqImGl5D1Cy_s2-YPQdo",
-        "AIzaSyCfSUbxjszcNBpczzEuQD-ontkYZSqNl0Y",
-        "AIzaSyD4AmNaUI666Q3hB9nFT7SGOGnWCr00vQ4",
-        "AIzaSyCk1-WxXVHJzqhWCks3CDEy7FHx-d5cu3k",
-        "AIzaSyCYPo5XOHVf0oO-OR1fI2V4N_fB30sA_OE",
-        "AIzaSyBwu0Jxb1onbw6GjOZlT4KLvfL8t1-NlWw",
-        "AIzaSyBZusDlJq4LpRZN0D-zPyoKpTZM-OhS9co",
-        "AIzaSyB1IosSwR6OFe_ftRWxWAJhJPz8pVLzj5U",
-        "AIzaSyCc_kIEdr6QZCrkQMcYfP7mf7WqB5CzW1A",
-        "AIzaSyBihTHh-pTYj6zdxZqmIKcJGF8i_pCgOCc",
-        "AIzaSyDmNmfV4XVrs4wVPIojJWPL7RsuCLxMK74",
-        "AIzaSyCdHHlqXqEhr40wjPE34tA83LoVqYxVLp0",
-        "AIzaSyBoPEsjAatQ95g3O-9siAJvy06e0lDp1Go",
-        "AIzaSyBT4SJ8uh6LKomQthmtQWb6LVOlD9iTLM8",
-        "AIzaSyDrXYuVD_DxKm-FPc4M4GQdI9cfwLw66Tc",
-        "AIzaSyCZPyRyvAW-QE0o65wtn1kzfs_c_vadUZg",
-        "AIzaSyA595BKKhh8aVdB0PqdxJIRvIGYH_qT6_g",
-        "AIzaSyAWs7cNBfZpyTRKYGaAo8oFFfm7FK9dVrs",
-        "AIzaSyB_LYBl9K4Y1wEfpav3IZZlyWCPnJhDhEw",
-        "AIzaSyD6Ua33kNr6QYMzhzbD4dpEnbF7jhSDPEo",
-        "AIzaSyBDhsr3PAyz49-ewB9c7aPjJq7rt5s4gDA",
-        "AIzaSyAkMR-KEbs1HeSwJSKHTItOIGZ6xGUIHPI",
-        "AIzaSyCOadKzOyOzLgf2M7oB02MMPd4CztRNb3E",
-        "AIzaSyDfOO4QRCD4IU0zluS4-JhOjmYyxiglN5s",
-        "AIzaSyC-7gU4y1vLq1B_Hq-CmOtkkRLRJzliyCo",
-        "AIzaSyBuyzi2018BHBcSU0CawEvunbFtVTCIPn8",
-        "AIzaSyAxeB99uE17WH8HLs1IWcd4cAoUQMOJa7Y",
-        "AIzaSyDuOw57xVilNaAWu7JomCAuYWcYZ6JrXeE",
-        "AIzaSyAyy2PeXtiLJIWZtBpoLaWCeIaCZxW8amA",
-        "AIzaSyCWtvuGZoc-i6GWmaUu1XzAUamrstFr3Ow",
-        "AIzaSyCjpWrdgRrTUEVNsz54Suht3itrCdBNWUA",
-        "AIzaSyDm1fxXrtTHrP0vtHHgtM9aoTrraqdYt9M",
-        "AIzaSyBHY7uO42_ZHBx12Ye4gcwjE4rene3FgDs",
-        "AIzaSyBqaA-QRnnr-vNs2JuSxZ-r2GWT58ri0ZY",
-        "AIzaSyAr9n_xj5wCfJiGFwuGvVBV-HEwcg4vbM8",
-        "AIzaSyBfPG5eQHy6hy3A3TpHABCpnDCelCmZdNg",
-        "AIzaSyASaCf7OQ204eT5pMjYbsxDdmdJrtUY6pE",
-        "AIzaSyB3dDSX8yyB8fsZqTBSexBBEwK-9h7p94s",
-        "AIzaSyC4sHHHpkrorgTgnE-dkAZ8gLgdIioWuOs",
-        "AIzaSyBzGNZYp4wt6A8rtZjoOl78kERdQ2eo7v0",
-        "AIzaSyDm2zdXeVJ6HpFnnmUj4mJXrmaLxM6g9Dw",
-        "AIzaSyDipaUcb5CSEuk0sflngScI0dYNPZYCxiI",
-        "AIzaSyApSgtR0bOI24AuVbfVYPCyHQRImQshFEI",
-        "AIzaSyDP4Pj6ER1IUKH9XRRsO8_IJnKzBHvWIm8",
-        "AIzaSyD5Im_B1zSbS59AObB1LpQX-NB_7EF3xpI",
-        "AIzaSyADX3-IpSKgw30ajoyAQqYqvqpmGbpk8mM",
-        "AIzaSyADxgL9jJ4EueVABAEHtOlkcnij4DBq-6M",
-        "AIzaSyCHSKSLK2rE8hHVwpZj03aeZvOjguCI4mE",
-        "AIzaSyBaWtw2JH9wE18WMfetnnNJdjXNqMoZ1lU",
-        "AIzaSyA3bo3kMSE8n9FlcGtPEg-wMjOvTM8c7fs",
-        "AIzaSyCnGY6ZY2uJnj2yZG3ZIsvCf9oFZxWja6E",
-        "AIzaSyBLXbt0Frjykmv3nyjqfqOiq_F8u3nfgHw",
-        "AIzaSyDVUF5oEZuFqISgBSdBdkSdi5-cABkx8pE",
-        "AIzaSyB3Z9SeA_Twwhc5prrb15UeZGBy55nvTvM",
-        "AIzaSyBTEgbdTHmPBshAw4rKvdVqOXH1uq6oQTc",
-        "AIzaSyAciT9Drq27IU_xkMy4EpBOtgwznMJkCCI",
-        "AIzaSyCCid067gh28fdPBL9m-jfFlNyTPcHDlcM",
-        "AIzaSyBRaYpTMvhzOad76RuXk9MxAsYMSwPqC_E",
-        "AIzaSyAOg10mM8OGmbYsxc9yIovyNwu80wWnxkY",
-        "AIzaSyAudmWIgwQF2Z9wJzH_lPmjN-TXCA-DjF0",
-        "AIzaSyC_AhGM7cANUZJJloRDLgbEkLUuRjwr3Jc",
-        "AIzaSyCjgK3Kvx-bYPyr_msk0IJ_H46Ntg8hQj0",
-        "AIzaSyCGOGxTPkcZFnjnkmvGBiPAQVyZi4tHH6s",
-        "AIzaSyAUTUP0Folh2UyIg1WGVmRGgVthDuCQUf0",
-        "AIzaSyCj0ff5GuS2ZtsQM3LCRLMegY3urKt-tMk",
-        "AIzaSyB12iejv4Q77WVNaYQgAs_6eLrrdzx-WtY",
-        "AIzaSyAbV_uO-jE5R4834nreYOztJ6gzScxPPxY",
-        "AIzaSyBbhD8js_ebdqgcYLHJc4ZslanGynZhLP0",
-        "AIzaSyB6cdGw2voCBmi_CLfQhy5F58WdJY4cGRM",
-        "AIzaSyCE125x6AqwM6wg9xwLkn9dkX0AYqrOg-w",
-        "AIzaSyDrsUC9gpi9hrYyZBo_Z7OfEPWnrjwtojQ",
-        "AIzaSyCiZRIKBF1QehjqL52hRwszmHz0rlD4Gbo",
-        "AIzaSyAuLQQ5kdNGaZKmd9CPlO0CT4FIitFF4xY",
-        "AIzaSyAq_YLL7-bJrr2YRRDgbEaX66d2TchXASc",
-        "AIzaSyAQCv4yZiJXFKIPLss8V4_cERLKVmvwkik",
-        "AIzaSyD-DO65XCikcFT1xOZ3AFipZYnRlmUNb8o",
-        "AIzaSyCMRnTdMPEmqsJ7OuM3_BeqKf_B3SYmSU8",
-        "AIzaSyBV2q9F-XZKc45yhFa9Bg9L4Rcv_9Wb2yY",
-        "AIzaSyCpZ5ICedHDw4xZ6rLOiEvSmTDlXuwFThU",
-        "AIzaSyDb6thttVOPq_9NL7ERRM3f2jrUT3hIwG0",
-    ]
-    if keys_env:
-        keys = [k.strip() for k in keys_env.split(",") if k.strip()]
-    if not keys and single:
-        keys = [single]
-    
-    if not keys:
-        print("ERROR: No Gemini API key found. Set GEMINI_API_KEYS or GEMINI_API_KEY.", file=sys.stderr)
-        sys.exit(1)
-    
-    return keys
+def get_bedrock_client():
+    """Get a boto3 Bedrock Runtime client."""
+    return boto3.client(
+        service_name="bedrock-runtime",
+        region_name=AWS_REGION,
+    )
 
 class KeyRotator:
-    def __init__(self, keys, model_name="gemini-2.0-flash"):
-        self.keys = keys
-        self.idx  = 0
-        self.model_name = model_name
+    """Wrapper around Bedrock client for LLM and embedding calls."""
+    def __init__(self, model_name=None):
+        self.client = get_bedrock_client()
+        self.model_name = model_name or HAIKU_MODEL_ID
 
-    def generate(self, prompt: str, max_retries: int = 5) -> str:
-        tried = 0
+    def generate(self, prompt: str, max_retries: int = 3) -> str:
+        """Call Claude via Bedrock Converse API with retries."""
         last_error = None
-        while tried < len(self.keys) * 2:  # allow wrapping around
-            key = self.keys[self.idx % len(self.keys)]
-            self.idx += 1
-            tried    += 1
+        for attempt in range(max_retries):
             try:
-                if tried > 1:
-                    print(f"    [KeyRotator] Attempt {tried}: Trying next key...")
-                genai.configure(api_key=key)
-                model = genai.GenerativeModel(self.model_name)
-                response = model.generate_content([prompt])
-                if hasattr(response, 'text') and response.text:
-                    return response.text
-                elif hasattr(response, 'candidates') and response.candidates:
-                    return response.candidates[0].content.parts[0].text
+                response = self.client.converse(
+                    modelId=self.model_name,
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": [{"text": prompt}],
+                        }
+                    ],
+                    inferenceConfig={
+                        "maxTokens": 4096,
+                        "temperature": 0.3,
+                    },
+                )
+                return response["output"]["message"]["content"][0]["text"]
+            except Exception as e:
+                last_error = e
+                err = str(e).lower()
+                print(f"    [Bedrock] Attempt {attempt+1} failed: {err[:100]}")
+                if "throttl" in err or "rate" in err:
+                    time.sleep(2 * (attempt + 1))
                 else:
-                    raise RuntimeError("Empty response from model")
-            except Exception as e:
-                last_error = e
-                err = str(e).lower()
-                print(f"    [KeyRotator] Key {self.idx % len(self.keys)} failed: {err[:100]}")
-                if "429" in err or "quota" in err or "rate" in err or "exhausted" in err or "expired" in err or "not found" in err:
-                    continue # immediately try next key
-                time.sleep(1) # wait a bit for other errors
-        raise RuntimeError(f"All keys failed. Last error: {last_error}")
+                    time.sleep(1)
+        raise RuntimeError(f"Bedrock call failed after {max_retries} attempts: {last_error}")
 
-    def generate_embed_direct(self, func, max_retries: int = 5) -> Any:
-        tried = 0
-        last_error = None
-        while tried < len(self.keys) * 2:
-            key = self.keys[self.idx % len(self.keys)]
-            self.idx += 1
-            tried    += 1
-            try:
-                genai.configure(api_key=key)
-                return func()
-            except Exception as e:
-                last_error = e
-                err = str(e).lower()
-                if "429" in err or "quota" in err or "rate" in err or "exhausted" in err:
-                    continue
-                time.sleep(0.5)
-        raise RuntimeError(f"All keys failed. Last error: {last_error}")
+    def generate_embed_direct(self, text: str) -> list:
+        """Generate embedding using Amazon Titan V2."""
+        payload = {
+            "inputText": text[:8000],
+            "dimensions": EMBED_DIM,
+            "normalize": True,
+        }
+        response = self.client.invoke_model(
+            body=json.dumps(payload),
+            modelId=EMBED_MODEL_ID,
+            accept="application/json",
+            contentType="application/json",
+        )
+        result = json.loads(response["body"].read())
+        return result["embedding"]
 
-def configure_gemini(api_key: str, model_name: str = "gemini-2.0-flash-exp"):
-    """Configure Gemini with API key"""
-    genai.configure(api_key=api_key)
-    return genai.GenerativeModel(model_name)
+
 
 def extract_text_from_pdf(pdf_path: str) -> Tuple[str, List[str]]:
     """Extract text and URLs from PDF using pdfplumber"""
@@ -375,15 +246,7 @@ def update_vector_index(final_data: dict, output_path: str, rotator: 'KeyRotator
     
     # 2. Get Embedding
     try:
-        # KeyRotator already handles the looping
-        def _embed_func():
-            return genai.embed_content(
-                model=EMBED_MODEL,
-                content=distilled_text,
-                task_type="RETRIEVAL_DOCUMENT",
-            )["embedding"]
-        
-        embedding = rotator.generate_embed_direct(_embed_func)
+        embedding = rotator.generate_embed_direct(distilled_text)
         embedding_vec = np.array(embedding, dtype="float32").reshape(1, -1)
         # Normalize
         embedding_vec /= np.linalg.norm(embedding_vec) + 1e-10
@@ -892,7 +755,7 @@ Return ONLY the JSON object:
 """
 
 # Main Processing Functions
-def process_resume(pdf_path: str, output_path: str, api_keys: List[str], model_name: str) -> None:
+def process_resume(pdf_path: str, output_path: str, model_name: str = None) -> None:
     """Process a single resume through the 5-call pipeline"""
     filename = os.path.basename(pdf_path)
     print(f"Processing {filename}...")
@@ -904,7 +767,7 @@ def process_resume(pdf_path: str, output_path: str, api_keys: List[str], model_n
         return
     
     # Ensure we have a rotator
-    rotator = KeyRotator(api_keys, model_name)
+    rotator = KeyRotator(model_name=model_name)
     
     try:
         # Call 1: Basic Info
@@ -964,10 +827,10 @@ def process_resume(pdf_path: str, output_path: str, api_keys: List[str], model_n
 
 def main():
     print("Script started...")
-    parser = argparse.ArgumentParser(description="Parse PDF resumes using 5-call Gemini pipeline")
+    parser = argparse.ArgumentParser(description="Parse PDF resumes using 5-call AWS Bedrock pipeline")
     parser.add_argument("--input_dir", required=True, help="Directory containing PDF resumes")
     parser.add_argument("--output_dir", required=True, help="Directory to save JSON outputs")
-    parser.add_argument("--model", default="gemini-2.0-flash-exp", help="Gemini model name")
+    parser.add_argument("--model", default=HAIKU_MODEL_ID, help="Bedrock model ID")
     
     args = parser.parse_args()
     
@@ -979,9 +842,8 @@ def main():
     # Create output directory
     os.makedirs(args.output_dir, exist_ok=True)
     
-    # Get API keys
-    api_keys = get_api_keys()
-    print(f"Loaded {len(api_keys)} API keys")
+    print(f"Using AWS Bedrock with model: {args.model}")
+    print(f"Region: {AWS_REGION}")
     
     # Find PDF files
     pdf_files = [f for f in os.listdir(args.input_dir) if f.lower().endswith('.pdf')]
@@ -1003,9 +865,9 @@ def main():
             print(f"Skipping {pdf_file} (already processed)")
             continue
         
-        process_resume(pdf_path, output_path, api_keys, args.model)
+        process_resume(pdf_path, output_path, args.model)
     
     print("All resumes processed!")
 
 if __name__ == "__main__":
-    main()
+    main()

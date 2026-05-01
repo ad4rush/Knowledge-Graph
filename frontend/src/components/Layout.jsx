@@ -11,7 +11,7 @@ export default function Layout() {
   return (
     <div className="app">
       <aside className="sidebar">
-        <div className="sidebar-logo">Resume Parser</div>
+        <div className="sidebar-logo">Profile Knowledge Graph</div>
         <nav className="sidebar-nav">
           {navItems.map(item => (
             <NavLink

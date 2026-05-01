@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 """
-Resume -> Flat JSON (raw + scores), two Gemini calls per resume, best-PDF extraction.
+Resume -> Flat JSON (raw + scores), two Claude calls per resume, best-PDF extraction.
 
 Usage:
-  python resume_parser.py --input_dir /path/to/resumes --output_dir /path/to/output \
-      [--model gemini-1.5-pro-latest]
+  python Parser.py --input_dir /path/to/resumes --output_dir /path/to/output
 
 Env:
-  GEMINI_API_KEY           -> single key (optional if GEMINI_API_KEYS provided)
-  GEMINI_API_KEYS          -> comma-separated up to 5 keys (preferred)
-  GEMINI_MODEL             -> optional (default: gemini-1.5-pro-latest)
+  AWS_ACCESS_KEY_ID        -> AWS access key
+  AWS_SECRET_ACCESS_KEY    -> AWS secret key
+  AWS_DEFAULT_REGION       -> AWS region (default: ap-southeast-2)
 
 Install:
-  pip install google-generativeai pymupdf tqdm python-dotenv
+  pip install boto3 pymupdf tqdm python-dotenv
 """
 
 import os
@@ -31,11 +30,15 @@ except ImportError:
     print("Missing dependency 'pymupdf'. Install with: pip install pymupdf", file=sys.stderr)
     raise
 
-try:
-    import google.generativeai as genai
-except ImportError:
-    print("Missing dependency 'google-generativeai'. Install with: pip install google-generativeai", file=sys.stderr)
-    raise
+import boto3
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# AWS Bedrock config (APAC cross-region inference profiles — confirmed ACTIVE)
+AWS_REGION = os.getenv("AWS_DEFAULT_REGION", "ap-southeast-2")
+HAIKU_MODEL_ID = "apac.anthropic.claude-3-haiku-20240307-v1:0"
+bedrock_runtime = boto3.client("bedrock-runtime", region_name=AWS_REGION)
 
 from tqdm import tqdm
 
@@ -77,28 +80,16 @@ PRIMARY_DOMAIN_CHOICES = [
 # -----------------------------
 # Helpers
 # -----------------------------
-def get_api_keys() -> List[str]:
-    """
-    Read API keys from env. Prefer GEMINI_API_KEYS (comma-separated, up to 5).
-    Fallback to GEMINI_API_KEY (single).
-    """
-    keys_env = os.getenv("GEMINI_API_KEYS", "").strip()
-    single = os.getenv("GEMINI_API_KEY", "").strip()
-    keys = []
-    if keys_env:
-        keys = [k.strip() for k in keys_env.split(",") if k.strip()]
-    if not keys and single:
-        keys = [single]
-    if not keys:
-        print("ERROR: No Gemini API key found. Set GEMINI_API_KEYS or GEMINI_API_KEY.", file=sys.stderr)
-        sys.exit(1)
-    if len(keys) > 5:
-        keys = keys[:5]
-    return keys
-
-def configure_gemini(api_key: str, model_name: str):
-    genai.configure(api_key=api_key)
-    return genai.GenerativeModel(model_name)
+def call_bedrock(prompt: str, model_id: str = None, max_tokens: int = 4096) -> str:
+    """Call Claude via AWS Bedrock Converse API."""
+    if model_id is None:
+        model_id = HAIKU_MODEL_ID
+    response = bedrock_runtime.converse(
+        modelId=model_id,
+        messages=[{"role": "user", "content": [{"text": prompt}]}],
+        inferenceConfig={"maxTokens": max_tokens, "temperature": 0.3},
+    )
+    return response["output"]["message"]["content"][0]["text"]
 
 def read_pdf_with_links(pdf_path: str) -> Tuple[str, List[str]]:
     """
@@ -462,25 +453,16 @@ Return ONLY the JSON object. Nothing else.
 # -----------------------------
 # Core pipeline
 # -----------------------------
-def call_model_with_retry(model_name: str, api_keys: List[str], prompt: str, max_retries: int = 3, sleep_s: float = 1.5) -> str:
+def call_model_with_retry(model_name: str, api_keys, prompt: str, max_retries: int = 3, sleep_s: float = 1.5) -> str:
+    """Call Claude via Bedrock with retries."""
     err = None
     for attempt in range(max_retries):
-        key = api_keys[(attempt) % len(api_keys)]
         try:
-            model = configure_gemini(key, model_name)
-            resp = model.generate_content([prompt])
-            if hasattr(resp, "text") and resp.text:
-                return resp.text
-            # Some SDK versions: candidates[0].content.parts[0].text
-            try:
-                return resp.candidates[0].content.parts[0].text
-            except Exception:
-                pass
-            raise RuntimeError("Empty response text from model.")
+            return call_bedrock(prompt, model_id=HAIKU_MODEL_ID)
         except Exception as e:
             err = e
             time.sleep(sleep_s * (attempt + 1))
-    raise RuntimeError(f"Gemini call failed after {max_retries} attempts: {err}")
+    raise RuntimeError(f"Bedrock call failed after {max_retries} attempts: {err}")
 
 def process_one_resume(pdf_path: str, out_json_path: str, model_name: str, api_keys: List[str]) -> None:
     # Extract text + urls
@@ -527,11 +509,11 @@ def process_one_resume(pdf_path: str, out_json_path: str, model_name: str, api_k
     save_json(out_json_path, merged)
 
 def main():
-    parser = argparse.ArgumentParser(description="Parse resumes (PDF) -> flat JSON (raw+scores) via Gemini (2-call pipeline).")
+    parser = argparse.ArgumentParser(description="Parse resumes (PDF) -> flat JSON (raw+scores) via AWS Bedrock (2-call pipeline).")
     parser.add_argument("--input_dir", required=True, help="Folder containing PDF resumes.")
     parser.add_argument("--output_dir", required=True, help="Folder to write JSON outputs.")
-    parser.add_argument("--model", default=os.getenv("GEMINI_MODEL", "gemini-1.5-pro-latest"),
-                        help="Gemini model name (default: gemini-1.5-pro-latest).")
+    parser.add_argument("--model", default=HAIKU_MODEL_ID,
+                        help="Bedrock model ID.")
     args = parser.parse_args()
 
     input_dir = args.input_dir
@@ -543,7 +525,7 @@ def main():
         sys.exit(1)
 
     os.makedirs(output_dir, exist_ok=True)
-    api_keys = get_api_keys()
+    api_keys = []  # Not needed for Bedrock, kept for API compatibility
 
     pdf_files = [f for f in os.listdir(input_dir) if f.lower().endswith(".pdf")]
     if not pdf_files:

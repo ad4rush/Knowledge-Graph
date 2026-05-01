@@ -9,30 +9,38 @@ import { searchStudents, photoUrl } from '../api'
 function formatMarkdown(text) {
   if (!text) return ''
   let html = text
-    // Escape HTML entities
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
+
   // Headers
   html = html.replace(/^### (.+)$/gm, '<h4>$1</h4>')
   html = html.replace(/^## (.+)$/gm, '<h3>$1</h3>')
   html = html.replace(/^# (.+)$/gm, '<h2>$1</h2>')
-  // Bold and italic
-  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>')
+
+  // Bold and italic (handling both ** and __)
+  html = html.replace(/(\*\*\*|___)(.+?)\1/g, '<strong><em>$2</em></strong>')
+  html = html.replace(/(\*\*|__)(.+?)\1/g, '<strong>$2</strong>')
+  html = html.replace(/(\*|_)(.+?)\1/g, '<em>$2</em>')
+
   // Horizontal rules
   html = html.replace(/^---+$/gm, '<hr/>')
-  // Numbered lists
-  html = html.replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>')
-  // Bullet lists
-  html = html.replace(/^[-•]\s+(.+)$/gm, '<li>$1</li>')
-  // Wrap consecutive <li> in <ul>
-  html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>')
-  // Line breaks (double newline → paragraph break, single → <br>)
+
+  // Lists (Bullet and Numbered)
+  // First, convert them to <li>
+  html = html.replace(/^[\s]*[-•*]\s+(.+)$/gm, '<li>$1</li>')
+  html = html.replace(/^[\s]*\d+\.\s+(.+)$/gm, '<li>$1</li>')
+  
+  // Wrap groups of <li> in <ul> (more robustly)
+  html = html.replace(/(<li>(?:.|\n)*?<\/li>)/g, '<ul>$1</ul>')
+  // Cleanup nested <ul> from the above greedy match
+  html = html.replace(/<\/ul>\s*<ul>/g, '')
+
+  // Paragraphs and Line breaks
   html = html.replace(/\n\n/g, '</p><p>')
   html = html.replace(/\n/g, '<br/>')
-  return `<p>${html}</p>`
+
+  return `<div class="md-content"><p>${html}</p></div>`
 }
 
 export default function Search() {

@@ -2,6 +2,7 @@
 """
 FastAPI Backend for Resume Parser Portal
 Serves student data, search, upload, photos, and knowledge graph data.
+Uses AWS Bedrock (Claude 3.5 + Titan Embeddings) instead of Google Gemini.
 """
 
 import os
@@ -23,7 +24,26 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 import faiss
-import google.generativeai as genai
+import boto3
+from dotenv import load_dotenv
+
+# Load .env file
+load_dotenv()
+
+# ─── AWS BEDROCK CONFIG ──────────────────────────────────────────────────────
+AWS_REGION = os.getenv("AWS_DEFAULT_REGION", "ap-southeast-2")
+
+# Model IDs
+EMBED_MODEL_ID = "amazon.titan-embed-text-v2:0"
+EMBED_DIM      = 1024
+LLM_MODEL_ID   = "apac.anthropic.claude-3-5-sonnet-20241022-v2:0"   # APAC cross-region, ACTIVE
+HAIKU_MODEL_ID = "apac.anthropic.claude-3-haiku-20240307-v1:0"       # APAC cross-region, ACTIVE
+
+# Initialize Bedrock client
+bedrock_runtime = boto3.client(
+    service_name="bedrock-runtime",
+    region_name=AWS_REGION,
+)
 
 # ─── PATHS ────────────────────────────────────────────────────────────────────
 BASE_DIR    = Path(__file__).resolve().parent.parent
@@ -33,53 +53,46 @@ PHOTOS_DIR  = BASE_DIR / "photos"
 PDF_DIR     = BASE_DIR / "linkedin_pdfs"
 INDEX_FILE  = BASE_DIR / "resume_index.faiss"
 META_FILE   = BASE_DIR / "resume_metadata.json"
-EMBED_MODEL = "models/gemini-embedding-001"
-LLM_MODEL   = "gemini-2.5-flash"
 
-# ─── API KEYS ─────────────────────────────────────────────────────────────────
-def get_api_keys() -> list:
-    """Get API keys from env or fallback to hardcoded ones."""
-    env_keys = os.getenv("GEMINI_API_KEYS", "").strip()
-    if env_keys:
-        return [k.strip() for k in env_keys.split(",") if k.strip()]
-    single = os.getenv("GEMINI_API_KEY", "").strip()
-    if single:
-        return [single]
-    # Fallback: read from resume_search.py's API_KEYS list
-    search_file = BASE_DIR / "resume_search.py"
-    if search_file.exists():
-        content = search_file.read_text(encoding="utf-8")
-        keys = re.findall(r'"(AIza[A-Za-z0-9_-]{33,})"', content)
-        if keys:
-            return keys
-    return []
+# ─── BEDROCK HELPERS ─────────────────────────────────────────────────────────
 
-API_KEYS = get_api_keys()
+def bedrock_embed(text: str) -> list:
+    """Generate embedding using Amazon Titan Text Embeddings V2."""
+    payload = {
+        "inputText": text[:8000],  # Titan V2 has ~8k token limit
+        "dimensions": EMBED_DIM,
+        "normalize": True,
+    }
+    response = bedrock_runtime.invoke_model(
+        body=json.dumps(payload),
+        modelId=EMBED_MODEL_ID,
+        accept="application/json",
+        contentType="application/json",
+    )
+    result = json.loads(response["body"].read())
+    return result["embedding"]
 
-# ─── KEY ROTATOR ──────────────────────────────────────────────────────────────
-class KeyRotator:
-    def __init__(self, keys):
-        self.keys = keys if keys else [""]
-        self.idx = 0
 
-    def call_api(self, func, *args, **kwargs):
-        tried = 0
-        last_error = None
-        while tried < len(self.keys):
-            key = self.keys[self.idx % len(self.keys)]
-            self.idx += 1
-            tried += 1
-            try:
-                genai.configure(api_key=key)
-                return func(*args, **kwargs)
-            except Exception as e:
-                last_error = e
-                err = str(e).lower()
-                if any(x in err for x in ["429", "quota", "rate", "exhausted", "expired", "not found"]):
-                    continue
-        raise RuntimeError(f"All keys failed. Last error: {last_error}")
+def bedrock_generate(prompt: str, model_id: str = None, max_tokens: int = 4096) -> str:
+    """Generate text using Claude via Bedrock Converse API."""
+    if model_id is None:
+        model_id = LLM_MODEL_ID
 
-rotator = KeyRotator(API_KEYS)
+    response = bedrock_runtime.converse(
+        modelId=model_id,
+        messages=[
+            {
+                "role": "user",
+                "content": [{"text": prompt}],
+            }
+        ],
+        inferenceConfig={
+            "maxTokens": max_tokens,
+            "temperature": 0.3,
+        },
+    )
+    return response["output"]["message"]["content"][0]["text"]
+
 
 # ─── SKILL CATEGORIES ────────────────────────────────────────────────────────
 SKILL_CATEGORIES = [
@@ -95,7 +108,7 @@ SKILL_CATEGORIES = [
 ]
 
 # ─── FASTAPI APP ──────────────────────────────────────────────────────────────
-app = FastAPI(title="Resume Parser Portal", version="1.0")
+app = FastAPI(title="Resume Parser Portal", version="2.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -347,28 +360,18 @@ def search_students(req: SearchRequest):
     if not INDEX_FILE.exists() or not META_FILE.exists():
         raise HTTPException(status_code=400, detail="Index not built yet. Upload resumes first.")
     
-    if not API_KEYS:
-        raise HTTPException(status_code=500, detail="No API keys configured. Set GEMINI_API_KEYS env.")
-    
     # Load index and metadata
     index = faiss.read_index(str(INDEX_FILE))
     with open(META_FILE, "r", encoding="utf-8") as f:
         metadata = json.load(f)
     
-    # Embed query
-    def _embed():
-        return genai.embed_content(
-            model=EMBED_MODEL,
-            content=req.query,
-            task_type="RETRIEVAL_QUERY",
-        )
-    
+    # Embed query using Titan V2
     try:
-        result = rotator.call_api(_embed)
+        embedding = bedrock_embed(req.query)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Embedding failed: {e}")
     
-    vec = np.array(result["embedding"], dtype="float32")
+    vec = np.array(embedding, dtype="float32")
     vec /= np.linalg.norm(vec) + 1e-10
     vec = vec.reshape(1, -1)
     
@@ -382,11 +385,12 @@ def search_students(req: SearchRequest):
         if i == -1:
             continue
         m = metadata[i]
-        name = m.get("name", "")
+        name = m.get("name", "").strip()
         # Deduplicate by name (metadata may have dupes from output/ + manual_text/)
-        if name in seen_names:
+        if not name or name.lower() in seen_names:
             continue
-        seen_names.add(name)
+        seen_names.add(name.lower())
+        
         photo = get_photo_filename(name)
         candidates.append({
             "name": name,
@@ -424,14 +428,9 @@ Please provide a final ranked list of the best fits. For each candidate, provide
 3. A 1-2 sentence specific reason explaining WHY they are a good fit for this query, referencing their actual projects/skills.
 
 Format the output cleanly. Do not hallucinate skills they don't have. If a candidate is a weak fit despite being in the list, you can skip them or mention they are a partial fit."""
-
+        
         try:
-            def _generate():
-                model = genai.GenerativeModel(LLM_MODEL)
-                return model.generate_content(prompt)
-            
-            response = rotator.call_api(_generate)
-            ai_analysis = response.text
+            ai_analysis = bedrock_generate(prompt, model_id=LLM_MODEL_ID, max_tokens=2048)
         except Exception as e:
             ai_analysis = f"LLM re-ranking failed: {e}"
     
@@ -658,4 +657,4 @@ if frontend_dist.exists():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8001, reload=True)
