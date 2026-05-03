@@ -412,30 +412,62 @@ def search_students(req: SearchRequest):
     
     ai_analysis = None
     if not req.skip_llm and candidates:
-        # Build LLM prompt
+        # Build LLM prompt — ask Nova to output names in a strict ranked order
         context = ""
         for idx, c in enumerate(candidates):
             context += f"--- CANDIDATE {idx+1}: {c['name']} ---\n"
             context += f"Profile Info:\n{c['distilled']}\n\n"
         
-        prompt = f"""You are an expert technical recruiter analyzing a list of candidates returned by a semantic search engine.
+        # List of valid names for parsing
+        valid_names = [c['name'] for c in candidates]
+        
+        prompt = f"""You are an expert technical recruiter analyzing candidates returned by a semantic search engine.
 The user's query is: "{req.query}"
 
-I am providing you with the top {len(candidates)} candidates that matched the query based on vector similarity.
-Your job is to read their profiles, RE-RANK them strictly based on how well they actually fit the user's query, and pick the best ones.
-
-Here are the candidates:
+Here are the top candidates matched by vector similarity:
 {context}
 
-Please provide a final ranked list of the best fits. For each candidate, provide:
-1. Rank number
-2. Candidate Name  
-3. A 1-2 sentence specific reason explaining WHY they are a good fit for this query, referencing their actual projects/skills.
+RE-RANK these candidates strictly by how well they fit the query. Output your answer in EXACTLY this format:
 
-Format the output cleanly. Do not hallucinate skills they don't have. If a candidate is a weak fit despite being in the list, you can skip them or mention they are a partial fit."""
+RANKED_ORDER: <Name1>, <Name2>, <Name3>, ...
+
+Then below that, for each candidate in your ranked order, provide:
+**Rank N: [Candidate Name]**
+1-2 sentences explaining WHY they are a good fit, referencing their actual projects/skills.
+
+Use only the exact candidate names listed above. Do not hallucinate skills."""
         
         try:
             ai_analysis = bedrock_generate(prompt, model_id=LLM_MODEL_ID, max_tokens=2048)
+            
+            # ── Re-order candidates based on Nova's ranked output ──────────
+            # Parse the RANKED_ORDER line: "RANKED_ORDER: Name1, Name2, ..."
+            ranked_names = []
+            for line in ai_analysis.splitlines():
+                if line.strip().startswith("RANKED_ORDER:"):
+                    raw = line.split(":", 1)[1].strip()
+                    ranked_names = [n.strip() for n in raw.split(",") if n.strip()]
+                    break
+            
+            if ranked_names:
+                # Build a lookup: name -> candidate dict
+                cand_map = {c['name']: c for c in candidates}
+                reordered = []
+                for name in ranked_names:
+                    # Exact match first, then case-insensitive
+                    if name in cand_map:
+                        reordered.append(cand_map[name])
+                    else:
+                        match = next((c for c in candidates if c['name'].lower() == name.lower()), None)
+                        if match:
+                            reordered.append(match)
+                # Append any candidates Nova didn't mention (keep them at end)
+                mentioned = {c['name'] for c in reordered}
+                for c in candidates:
+                    if c['name'] not in mentioned:
+                        reordered.append(c)
+                candidates = reordered
+                
         except Exception as e:
             ai_analysis = f"LLM re-ranking failed: {e}"
     
