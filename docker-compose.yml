@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    image: resume-hub:latest
+    container_name: resume_hub
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+    volumes:
+      # Persist parsed output and index between restarts
+      - ./output:/app/output
+      - ./manual_text:/app/manual_text
+      - ./linkedin_pdfs:/app/linkedin_pdfs
+      - ./Resumes:/app/Resumes
+      - ./photos:/app/photos
+      - ./resume_index.faiss:/app/resume_index.faiss
+      - ./resume_metadata.json:/app/resume_metadata.json
+    restart: unless-stopped
