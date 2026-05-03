@@ -8,7 +8,7 @@ set -e
 
 APP_DIR="/home/ubuntu/resume-hub"
 REPO="https://github.com/ad4rush/Knowledge-Graph.git"
-BRANCH="main"
+BRANCH="master"
 
 echo "=== Resume Hub — EC2 Deploy ==="
 
