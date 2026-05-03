@@ -53,7 +53,7 @@ export default function Upload() {
         <input ref={inputRef} type="file" accept=".pdf" multiple hidden onChange={e => handleFiles(e.target.files)} />
         <div className="upload-icon">📄</div>
         <div className="upload-text">Drop PDF resumes here or click to browse</div>
-        <div className="upload-subtext">Supports batch upload · Files are parsed with Gemini AI</div>
+        <div className="upload-subtext">Supports batch upload · Files are parsed with Amazon Nova AI</div>
       </div>
 
       {files.length > 0 && (
@@ -79,7 +79,7 @@ export default function Upload() {
       {uploading && (
         <div style={{ marginTop: 24 }}>
           <div className="spinner" />
-          <p className="loading-text">Uploading PDFs → Parsing with Gemini → Building embeddings → Updating FAISS index...</p>
+          <p className="loading-text">Uploading PDFs → Parsing with Amazon Nova AI → Building embeddings → Updating FAISS index...</p>
         </div>
       )}
 

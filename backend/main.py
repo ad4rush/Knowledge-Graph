@@ -36,8 +36,7 @@ AWS_REGION = os.getenv("AWS_DEFAULT_REGION", "ap-southeast-2")
 # Model IDs
 EMBED_MODEL_ID = "amazon.titan-embed-text-v2:0"
 EMBED_DIM      = 1024
-LLM_MODEL_ID   = "apac.anthropic.claude-3-5-sonnet-20241022-v2:0"   # APAC cross-region, ACTIVE
-HAIKU_MODEL_ID = "apac.anthropic.claude-3-haiku-20240307-v1:0"       # APAC cross-region, ACTIVE
+LLM_MODEL_ID   = "amazon.nova-micro-v1:0"   # Nova Micro — same model used by resume parser
 
 # Initialize Bedrock client
 bedrock_runtime = boto3.client(
@@ -74,24 +73,30 @@ def bedrock_embed(text: str) -> list:
 
 
 def bedrock_generate(prompt: str, model_id: str = None, max_tokens: int = 4096) -> str:
-    """Generate text using Claude via Bedrock Converse API."""
+    """Generate text using Amazon Nova Micro via Bedrock invoke_model API."""
     if model_id is None:
         model_id = LLM_MODEL_ID
 
-    response = bedrock_runtime.converse(
-        modelId=model_id,
-        messages=[
+    payload = {
+        "messages": [
             {
                 "role": "user",
                 "content": [{"text": prompt}],
             }
         ],
-        inferenceConfig={
+        "inferenceConfig": {
             "maxTokens": max_tokens,
             "temperature": 0.3,
         },
+    }
+    response = bedrock_runtime.invoke_model(
+        modelId=model_id,
+        body=json.dumps(payload),
+        accept="application/json",
+        contentType="application/json",
     )
-    return response["output"]["message"]["content"][0]["text"]
+    result = json.loads(response["body"].read())
+    return result["output"]["message"]["content"][0]["text"]
 
 
 # ─── SKILL CATEGORIES ────────────────────────────────────────────────────────

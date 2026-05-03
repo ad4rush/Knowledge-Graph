@@ -90,7 +90,7 @@ export default function Search() {
       {loading && (
         <div>
           <div className="spinner" />
-          <p className="loading-text">Embedding query & searching FAISS index...<br />Then re-ranking with Gemini AI...</p>
+          <p className="loading-text">Embedding query &amp; searching FAISS index...<br />Then re-ranking with Amazon Nova AI...</p>
         </div>
       )}
 
@@ -139,7 +139,7 @@ export default function Search() {
           <h2 style={{ color: 'var(--text-bright)', fontWeight: 700 }}>Semantic Resume Search</h2>
           <p style={{ color: 'var(--text-dim)', maxWidth: 500, margin: '12px auto', lineHeight: 1.6 }}>
             Enter a natural language query above. The system will embed your query, search the FAISS vector database,
-            then re-rank results using Gemini AI with detailed reasoning.
+            then re-rank results using Amazon Nova AI with detailed reasoning.
           </p>
           <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap', marginTop: 20 }}>
             {['machine learning expert', 'VLSI design engineer', 'full-stack developer', 'backend with Kubernetes'].map(q => (
